@@ -1,6 +1,6 @@
 ---
 title: "Supercomputing Wales Introduction"
-author: "Colin Sauze"
+author: "Colin Sauze, Ed Bennett, Jarno Rantaharju"
 teaching: 10
 exercises: 0
 questions:
@@ -14,7 +14,7 @@ objectives:
  - "Understand that clusters typically have shared storage"
  - "Understand what is meant by a node"
  - "Understand what is meant by a core"
-
+---
 
 # Prior Knowledge/Pre-requesites
 
