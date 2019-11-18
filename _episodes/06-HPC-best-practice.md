@@ -3,10 +3,15 @@ title: "What next?"
 author: "Colin Sauze"
 questions:
  - "What are the best practices for using an HPC system?"
- - "How can I take this forward and put it into practice?"
+ - "How can I take what i've learned so far forward and put it into practice?"
 objectives:
  - "Understand HPC best practice"
  - "Know what steps are needed to use Supercomputing Wales for research"
+keypoints:
+ - "Remember that HPCs are shared systems and try avoid allocating resources which you don't use"
+ - "Don't make millions of files"
+ - "You will need to apply for or using an existing project on Supercomputing Wales"
+ - "Make use of the Research Software Engineers to help you use the system effectively"
 ---
 
 
