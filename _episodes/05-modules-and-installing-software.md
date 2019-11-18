@@ -22,7 +22,7 @@ instead, it is loaded into your environment incrementally using a module system.
 The module command controls this. 
 You can get a list of available software with the `module avail` command. This should return a long list of available software.
 
-One common piece of software that isn't installed on SCW (without a module) is Python version 3. If we attempt to run `python3` from the command line it will respond with an error:
+One common piece of software that isn't installed on Super Computing Wales (without a module) is Python version 3. If we attempt to run `python3` from the command line it will respond with an error:
 
 ~~~
 [s.jane.doe@sl1 ~]$ python3
