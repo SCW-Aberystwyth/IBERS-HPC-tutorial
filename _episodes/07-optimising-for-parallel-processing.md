@@ -57,9 +57,9 @@ GNU Parallel can be loaded a module called "parallel". Its syntax is a bit compl
 
 ### A simple GNU Parallel example
 
-For this example we'll just run on a quick test on the head node. First we have to load the module for parallel. This is only available via the legacy HPC Wales modules which have to be activated by loading the module called "hpcw". 
+For this example we'll just run on a quick test on the login node. First we have to load the module for parallel.
 
-`module load hpcw parallel`
+`module load parallel`
 
 > ## Citing Software
 > Each time you run GNU parallel it will remind that you academic tradition requires you to cite the software you used. You can stop this message by running `parallel --citation` once and parallel will then remember not to show this message anymore. Running this will also show you the Bibtex code for citing parallel in your papers. 

@@ -7,7 +7,7 @@ questions:
  - "How can do I login to Supercomputing Wales?"
 objectives: 
  - "Understand how to login to Supercomputing Wales"
- - "Understand the difference between the login node and each cluster's head node."
+ - "Understand the difference between the login node and compute nodes."
 keypoints:
  - "ssh sunbird.swansea.ac.uk or hawklogin.cf.ac.uk to login to the system"
  - "sinfo shows partitions and how busy they are."

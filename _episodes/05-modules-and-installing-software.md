@@ -34,7 +34,7 @@ One common piece of software that isn't installed on Supercomputing Wales (witho
 ~~~
 {: .output}
 
-**Note that the head node and the compute nodes have identical configurations in terms of what software is available, so you can discover if your program will run from the head node**
+**Note that the login nodes and the compute nodes have identical configurations in terms of what software is available, so you can discover if your program will run from the login node**
 
 From the output of the `module avail` command there should have been an entry `python/3.7.0` in the `/app/modules/langauges` section near the top. Lets go ahead and load this using the 
 Lets load Python version 3.7.0 as a module and attempt to run the python3 command. This should start a Python3 interpreter, we can exit python by either pressing Ctrl+d or typing `exit()` and pressing enter. 
