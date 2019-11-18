@@ -499,7 +499,7 @@ Never use a piece of software for the first time without looking to see what com
 ### Time
 This is determined by test runs that you do on your code during an interactive session.
 Or, if you submit a batch job, over-ask first, check the amount of time actually needed,
-then reduce time on later runs. **SCW has a limit of three days maximum to run a job**
+then reduce time on later runs. **Super Computing Wales has a limit of three days maximum to run a job**
 
 **Please!** Due to scheduler overhead, bundle commands for minimum of 10 minutes / job
 

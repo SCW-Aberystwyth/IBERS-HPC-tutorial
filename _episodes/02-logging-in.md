@@ -1,12 +1,12 @@
 ---
-title: "Logging in to SCW"
+title: "Logging in to Super Computing Wales"
 author: "Colin Sauze"
 teaching: 20
 exercises: 15
 questions:
- - "How can do I login to SCW?"
+ - "How can do I login to Super Computing Wales?"
 objectives: 
- - "Understand how to login to SCW"
+ - "Understand how to login to Super Computing Wales"
  - "Understand the difference between the login node and each cluster's head node."
 keypoints:
  - "ssh sunbird.swansea.ac.uk or hawklogin.cf.ac.uk to login to the system"
@@ -27,7 +27,7 @@ $ ssh username@sunbird.swansea.ac.uk
 ~~~
 {: .bash}
 
-Windows users should use PuTTY and enter sunbird.swansea.ac.uk in the hostname box. 
+PuTTY users should enter sunbird.swansea.ac.uk in the hostname box. 
 
 
 Bangor and Cariff Users should login to the Cardiff Hawk system by typing:
@@ -37,7 +37,7 @@ $ ssh username@hawklogin.cf.ac.uk
 ~~~
 {: .bash}
 
-Windows PuTTY users should enter hawklogin.cf.ac.uk in the hostname box. 
+PuTTY users should enter hawklogin.cf.ac.uk in the hostname box. 
 
 
 ## What's available?
