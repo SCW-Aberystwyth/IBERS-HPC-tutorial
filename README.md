@@ -13,3 +13,5 @@ Original contributors:
 * Andréa Matsunaga
 * [Stephen Turner](https://twitter.com/genetics_blog)
 * Jason Williams
+
+The Parallel processing sections of this lesson have been adapted from HPC in a Day (https://github.com/psteinb/hpc-in-a-day) by Peter Steinbach. 
