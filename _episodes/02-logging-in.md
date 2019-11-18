@@ -1,12 +1,12 @@
 ---
-title: "Logging in to Super Computing Wales"
+title: "Logging in to Supercomputing Wales"
 author: "Colin Sauze"
 teaching: 20
 exercises: 15
 questions:
- - "How can do I login to Super Computing Wales?"
+ - "How can do I login to Supercomputing Wales?"
 objectives: 
- - "Understand how to login to Super Computing Wales"
+ - "Understand how to login to Supercomputing Wales"
  - "Understand the difference between the login node and each cluster's head node."
 keypoints:
  - "ssh sunbird.swansea.ac.uk or hawklogin.cf.ac.uk to login to the system"
@@ -42,7 +42,7 @@ PuTTY users should enter hawklogin.cf.ac.uk in the hostname box.
 
 ## What's available?
 
-### Super Computing Wales
+### Supercomputing Wales
 
 These figures may still be subject to some change and might have been sourced from out of date documents. 
 
@@ -67,7 +67,7 @@ Aberystwyth users are expected to use the Swansea system and will need to make a
 
 ### Slurm
 
-Slurm is the management software used on Super Computing Wales. It lets you submit (and monitor or cancel) jobs to the cluster and chooses where to run them. 
+Slurm is the management software used on Supercomputing Wales. It lets you submit (and monitor or cancel) jobs to the cluster and chooses where to run them. 
 
 Other clusters might run different job management software such as LSF, Sun Grid Engine or Condor, although they all operate along similar principles.
 
@@ -99,7 +99,7 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
 
 # Exercises
 
-> ## Logging into Super Computing Wales
+> ## Logging into Supercomputing Wales
 > 1. In your web browser go to https://my.supercomputing.wales and login with your university username and password. 
 > 2. Click on "Reset SCW Password" and choose a new password for logging into the HPC. Your username is displayed in the "Account summary" box on the main page. Its usually a/b/c/s. and your normal university login.
 > 3. Login to sunbird.swansea.ac.uk or hawklogin.cf.ac.uk using your SSH client.

@@ -322,7 +322,7 @@ sys     0m0.165s
 ~~~
 {: .output}
 
-Note here, that we are now free to scale this application to hundreds of cores if we wanted to. We are only restricted by Amdahl's law, the size of our compute cluster and any limits the administrators apply (on Super Computing Wales we can only use 26 nodes at once). Before finishing the day, Lola looks at the run time that her MPI job consumed. `3.92` seconds for a job that ran on six times as much cores as here parallel implementation before (which took `56s` for the same configuration). To test the performance and work out how many cores she should use, she decided to write a small script which varied the number of cores being used. 
+Note here, that we are now free to scale this application to hundreds of cores if we wanted to. We are only restricted by Amdahl's law, the size of our compute cluster and any limits the administrators apply (on Supercomputing Wales we can only use 26 nodes at once). Before finishing the day, Lola looks at the run time that her MPI job consumed. `3.92` seconds for a job that ran on six times as much cores as here parallel implementation before (which took `56s` for the same configuration). To test the performance and work out how many cores she should use, she decided to write a small script which varied the number of cores being used. 
 
 ~~~
 for i in {seq 1 48} ; do

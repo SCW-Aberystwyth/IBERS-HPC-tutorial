@@ -22,7 +22,7 @@ instead, it is loaded into your environment incrementally using a module system.
 The module command controls this. 
 You can get a list of available software with the `module avail` command. This should return a long list of available software.
 
-One common piece of software that isn't installed on Super Computing Wales (without a module) is Python version 3. If we attempt to run `python3` from the command line it will respond with an error:
+One common piece of software that isn't installed on Supercomputing Wales (without a module) is Python version 3. If we attempt to run `python3` from the command line it will respond with an error:
 
 ~~~
 [s.jane.doe@sl1 ~]$ python3
@@ -54,7 +54,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 > All of the old modules which were available on HPC Wales and the old Cardiff Raven system 
 > are available by running either `module load hpcw` or `module load raven` (Raven modules are only available on Hawk).
 > Please note that much of this software is outdated and may by suboptimal as its not compiled
-> to take advantage of the newer CPU architectures on Super Computing Wales.
+> to take advantage of the newer CPU architectures on Supercomputing Wales.
 {: .callout}
 
 
@@ -112,7 +112,7 @@ The outputted data is part of the contents from sklearn.
 ## How to install other software yourself
 
 *For Perl & Python modules or R packages*, we encourage you to set up directories in your
-home and/or lab folders for installing your own copies locally. Instructions on how to install these are available from the [How To](https://portal.supercomputing.wales/index.php/index/how-to-guides-archive/) pages on the Super Computing Wales portal.
+home and/or lab folders for installing your own copies locally. Instructions on how to install these are available from the [How To](https://portal.supercomputing.wales/index.php/index/how-to-guides-archive/) pages on the Supercomputing Wales portal.
 
 ## Requesting additional software 
 

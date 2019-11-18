@@ -499,7 +499,7 @@ Never use a piece of software for the first time without looking to see what com
 ### Time
 This is determined by test runs that you do on your code during an interactive session.
 Or, if you submit a batch job, over-ask first, check the amount of time actually needed,
-then reduce time on later runs. **Super Computing Wales has a limit of three days maximum to run a job**
+then reduce time on later runs. **Supercomputing Wales has a limit of three days maximum to run a job**
 
 **Please!** Due to scheduler overhead, bundle commands for minimum of 10 minutes / job
 
@@ -598,6 +598,6 @@ You can receive email alerts when your job begins and ends by adding the followi
 
 # More information about Slurm 
 
-* [Super Computing Wales Documentation](http://portal.supercomputing.wales)
+* [Supercomputing Wales Documentation](http://portal.supercomputing.wales)
 * [Harvard University's list of common Slurm commands](https://rc.fas.harvard.edu/resources/documentation/convenient-slurm-commands/)
 * [For those coming from another cluster/scheduler, check out Slurm's scheduler Rosetta stone](http://slurm.schedmd.com/rosetta.pdf)
