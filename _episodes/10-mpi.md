@@ -102,9 +102,8 @@ Like a reflex, Lola asks how to write these MPI programs. Her colleague points o
 Before we can run Mpi4py programs we need to install the module through pip3. Installing the pip module also requires the mpi module to be loaded. The following commands will install mpi4py.
 
 ~~~
-$ module load hpcw
 $ module load mpi
-$ module load python/3.5.1
+$ module load python/3.7.0
 $ wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py
 $ pip3 install --user mpi4py
 ~~~
@@ -131,7 +130,7 @@ Now we can run the program by putting the following into py_mpi_hostname.sh
 ###
 
 module load mpi
-module load python/3.5.1
+module load python/3.7.0
 mpirun python3 print_hostname.py
 ~~~
 {: .bash}
@@ -318,8 +317,7 @@ wget https://supercomputingwales.github.io/SCW-tutorial/code/mpi_numpi.py
 #SBATCH --reservation=scwXXXX_YY
 ###
 
-module load hpcw
-module load python/3.5.1
+module load python/3.7.0
 module load mpi
 mpirun python3 mpi_numpi.py 1000000000                          
 
@@ -339,11 +337,8 @@ sys     0m0.165s
 ~~~
 {: .output}
 
-<<<<<<< HEAD
 Note here, that we are now free to scale this application to hundreds of cores if we wanted to. We are only restricted by Amdahl's law, the size of our compute cluster and any limits the administrators apply (on Supercomputing Wales we can only use 26 nodes at once). Before finishing the day, Lola looks at the run time that her MPI job consumed. `3.92` seconds for a job that ran on six times as much cores as here parallel implementation before (which took `56s` for the same configuration). To test the performance and work out how many cores she should use, she decided to write a small script which varied the number of cores being used. 
-=======
-Note here, that we are now free to scale this application to hundreds of cores if we wanted to. We are only restricted by Amdahl's law, the size of our compute cluster and any limits the administrators apply (on HPC Wales we can only use 25 nodes at once). Before finishing the day, Lola looks at the run time that her MPI job consumed. `3.92` seconds for a job that ran on six times as much cores as here parallel implementation before (which took `56s` for the same configuration). To test the performance and work out how many cores she should use she decided to write a small script which varied the number of cores being used.
->>>>>>> d54fae2aca8e47d2b33afc5250667bd5a88e1583
+
 
 ~~~
 for i in {seq 1 48} ; do

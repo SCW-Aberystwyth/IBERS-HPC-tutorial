@@ -2,6 +2,7 @@
 title: "Parallel Estimation of Pi"
 teaching: 30
 exercises: 5 +
+author: "Colin Sauze, Ed Bennett, Jarno Rantaharju, based on material by Peter Steinbach"
 questions:
 - "What are data parallel algorithms?"
 - "How can I estimate the yield of parallelization without writing one line of code?"
@@ -289,6 +290,7 @@ PyMP is a Python module based on a popular program called OpenMP that's availabl
 Install the `pymp` module by running the command:
 
 ~~~
+$ module load python/3.7.0
 $ pip3 install --user pymp-pypi
 ~~~
 {: .bash}
@@ -301,10 +303,9 @@ One thing we must be cautious of when writing parallel code is what happens when
 The last step required before calculating pi is to collect the individual results from the `partitions` and _reduce_ it to one `total_count` of those random number pairs that were inside of the circle. Here the `sum` function loops over `partitions` and does exactly that. So let's run our [parallel implementation]({{ page.root }}/code/pymp_numpi.py) and see what it gives:
 
 ~~~
-$ module load hpcw
-$ module load python/3.5.1
+$ module load python/3.7.0
 $ wget https://supercomputingwales.github.io/SCW-tutorial/code/pymp_numpi.py
-$ python3 ./pymp_numpi.py 1000000000
+$ python3 ./pymp_numpi.py 1000000000 8
 ~~~
 {: .bash}
 
@@ -333,7 +334,7 @@ sys     3m28.885s
 {: .output}
 
 ~~~
-$ time python3 ./pymp_numpi.py 1000000000
+$ time python3 ./pymp_numpi.py 1000000000 8
 ~~~
 {: .bash}
 

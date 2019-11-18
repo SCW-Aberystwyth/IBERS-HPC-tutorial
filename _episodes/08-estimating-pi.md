@@ -1,5 +1,6 @@
 ---
 title: "Profiling Single Core Performance"
+author: "Colin Sauze, Ed Bennett, Jarno Rantaharju, based on material by Peter Steinbach"
 teaching: 20
 exercises: 40
 questions:
@@ -14,7 +15,7 @@ keypoints:
 - "The estimation of pi with the Monte Carlo method is a compute bound problem because pseudo-random numbers are just algorithms."
 ---
 
-Lola is told that her predecessors all worked on the same project. A high performance calculation that is able to produce a high precision estimate of Pi. Even though calculating Pi can be considered a solved problem, this piece of code is used at the institute to benchmark new hardware. So far, the institute has only acquired larger single machines for each lab to act as work horse per group. But currently, need for distributed computations has arisen and hence a distributed code is needed, that yields both simplicity, efficiency and scalability.
+Lola Lazy is a researcher learning to use an HPC system. As an introductory task her supervisor has tasked her with producing a high precision estimate of Pi. Even though calculating Pi can be considered a solved problem, this piece of code is used at the institute to benchmark new hardware. So far, the institute has only acquired larger single machines for each lab to act as work horse per group. But currently, need for distributed computations has arisen and hence a distributed code is needed, that yields both simplicity, efficiency and scalability.
 
 The algorithm was pioneered by _Georges-Louis Leclerc de Buffon_ in _1733_.
 
@@ -60,7 +61,7 @@ For generating pseudo-random numbers, we sample the uniform probability distribu
 Lola finishes writing the pi estimation and comes up with a [small python script]({{ page.root }}/code/serial_numpi.py), that she can launch from the command line:
 
 ~~~
-$ module load hpcw python/3.5.1
+$ module load python/3.7.0
 $ python3 ./serial_numpi.py 1000000000
 ~~~
 {: .bash}
@@ -75,12 +76,24 @@ She must admit that the application takes quite long to finish. Yet another reas
 
 ## Premature Optimisation is the root of all evil!
 
-Before venturing out and trying to accelerate a program, it is utterly important to find the hot spots of it by means of measurements. For the sake of this tutorial, we use the [line_profiler](https://github.com/rkern/line_profiler) of python. Your language of choice most likely has similar utilities.
+Before venturing out and trying to accelerate a program, it is utterly important to find the hot spots of it by means of measurements. For the sake of this tutorial, we use the [Line_Profiler](https://github.com/rkern/line_profiler) of python. Your language of choice most likely has similar utilities.
 
-to install the profiler, please issue the following commands. These load the python module, enabling the pip3 command and then install the module using pip3. Note that we have to use the legacy Python 3.5.1 which is part of the old HPC Wales modules, this is because the newer versions of Python were compiled with Intel's optimised C compiler but this isn't compatible with the line profiler. 
+to install the profiler, please issue the following commands. These commands work around a bug in the interaction between the Line Profiler and the Python modules used by Supercomputing Wales. To install the profiler on your own comptuer simply run `pip3 install line_profiler`. 
 
 ~~~
-$ pip3 install --user line_profiler
+$ module load python/3.7.0
+
+# make a directory for the python libraries
+$ mkdir -p ~/.local/lib/python3.7/site-packages/
+$ mkdir -p ~/.local/bin
+
+# download the code for line profiler
+$ git clone https://github.com/rkern/line_profiler.git
+
+# install line profiler in ~/.local
+$ find line_profiler -name '*.pyx' -exec cython {} \;
+$ cd line_profiler/
+$ python3 setup.py install --prefix=~/.local
 ~~~
 {: .bash }
 
