@@ -128,10 +128,7 @@ You can change directory on the remote host by typing a path into the "Remote si
 
 ### Copying on the command line using SFTP or SCP
 
-~~~
 If you prefer to use a command line interface to copy files then see the [reference](reference) material on using the SFTP and SCP commands. 
-~~~
-{:. callout}
 
 
 # Exercises
