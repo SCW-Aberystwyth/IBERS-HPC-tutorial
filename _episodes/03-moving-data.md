@@ -1,6 +1,6 @@
 ---
 title: "Filesystems and Storage"
-author: "Colin Sauze"
+author: "Colin Sauze, Ed Bennett, Jarno Rantaharju"
 teaching: 15
 exercises: 30
 questions:
@@ -126,73 +126,12 @@ You can change directory on the remote host by typing a path into the "Remote si
 ![Transferring files using FileZilla](../fig/filezilla6.png)
 
 
-### Copying on the command line using SFTP
-~~~
-Use the ```sftp``` command and connect to the system. This takes the argument of the username followed by an `@` symbol and then the hostname. Optionally you can specify what directory to start in by putting a ```:``` symbol after this and adding the directory name. The command below will start in ```/home/s.jane.doe/data```, if no directory is specified then sftp defaults to your home directory.
+### Copying on the command line using SFTP or SCP
 
 ~~~
-sftp s.jane.doe@sunbird.swansea.ac.uk:/home/s.jane.doe/data
-~~~
-{: .bash}
-
-~~~
-s.jane.doe@sunbird.swansea.ac.uk's password:
-Connected to sunbird.swansea.ac.uk.
-Changing to: /home/s.jane.doe/data
-sftp> ls
-~~~
-{: .output}
-
-The ```sftp``` and ```scp``` commands should be available on all Linux and Mac systems. Windows 10 systems with the April 2018 update (Spring 2018 Creators Edition) should also include it. For older versions On Windows systems they can be made available if you install the Linux Subsystem for Windows (Windows 10 only) or through [Git for Windows](https://gitforwindows.org).
-Aberystwyth University Windows desktops already have these commands installed. 
-
+If you prefer to use a command line interface to copy files then see the [reference](reference) material on using the SFTP and SCP commands. 
 ~~~
 {:. callout}
-
-#### SFTP commands
-SFTP uses many of the same commands as the Unix command line and the older FTP system which it has replaced. Most commnads by default run on the remote system, putting an `!` in front of the command runs it on the local system. Some common commands are shown below.
-~~~
-ls - lists files on the remote system
-!ls - lists files on the local system
-pwd - reports the current directory on the local system
-!pwd - reports the current directory on the remote system
-get - gets a file from the remote system
-put - sends a file to the remote system
-rm - delete a file on the remote system
-cd - change directory on the remote system
-lcd - change directory on the local system
-~~~
-{:. callout}
-
-
-
-
-=======
-### Copying data using FileZilla
-
-FileZilla is a graphical SCP/SFTP client available for Windows, Mac and Linux. You can download it from [FileZilla download](https://filezilla-project.org/download.php?type=client)
-
-Open FileZilla and type ```sftp://sunbird.swansea.ac.uk``` or ```sftp://hawklogin.cf.ac.uk``` into the host box. Enter your username and password in the username/password boxes.
-
-![Transferring files using FileZilla](../fig/filezilla1.png)
-
-Click Quickconnect and a connection will be started. The first time you connect you will be asked to verify the host key, tick the "Always trust this host, add key to the cache" box to stop this message appearing again in future.
-
-![Transferring files using FileZilla](../fig/filezilla2.png)
-
-You should now have some files in the right hand side of the window. These are on the remote system, the list on the left hand side is your local system.
-
-![Transferring files using FileZilla](../fig/filezilla3.png)
-
-Files can be transferred either by dragging and dropping them from one side to the other. Or you can right click on a remote file and choose "Download" or a local file and choose "Upload".
-
-![Transferring files using FileZilla](../fig/filezilla4.png)
-![Transferring files using FileZilla](../fig/filezilla5.png)
-
-You can change directory on the remote host by typing a path into the "Remote site:" box. For example type in ```/scratch/username``` (where `username` is your username) to access your scratch directory.
-
-![Transferring files using FileZilla](../fig/filezilla6.png)
-
 
 
 # Exercises
