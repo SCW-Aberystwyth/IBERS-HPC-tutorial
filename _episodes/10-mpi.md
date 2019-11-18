@@ -2,6 +2,7 @@
 title: Distributing computations among computers with MPI
 teaching: 45
 exercises: 10
+author: "Colin Sauze, Ed Bennett, Jarno Rantaharju, based on material by Peter Steinbach"
 questions:
 - "What issued the message passing interface (MPI)?"
 - "How do I exploit parallelism using the message passing interface (MPI)?"
