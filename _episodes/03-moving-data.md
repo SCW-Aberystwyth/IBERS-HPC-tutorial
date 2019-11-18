@@ -3,15 +3,15 @@ title: "Filesystems and Storage"
 author: "Colin Sauze"
 teaching: 15
 exercises: 30
-questions: 
+questions:
  - "Where can I store my data?"
  - "What is the difference between scratch and home filestore?"
-objectives: 
+objectives:
  - "Understand the difference between home and scratch directories"
  - "Understand how to copy files between your computer and your Supercomputing Wales home/scratch directories"
 keypoints:
  - "Scratch and home are per site."
- - "Scratch is faster and has no quotas, its not backed up. home is slower, smaller but backed up"
+ - "Scratch is faster and has no quotas, but short-term. home is slower and has quotas, but is long-term."
 ---
 
 
@@ -21,9 +21,11 @@ keypoints:
 Storage on most compute systems is not what and where you think they are! Physical disks are bundled together into a virtual volume; this virtual volume may represent one filesystem, or may be divided up, or partitioned, into multiple filesystems. And your directories then reside within one of these fileystems. Filesystems are accessed over the network through mount points.
 
 There are multiple storage/filesystems options available for you to do your work. The most common are:
+
 * home: where you land when you first login. 50 GB per user. Slower access, backed up (Cardiff only). Used to store your work long term. 
 * project: shared between all users of a project. Same filesystem as home. 
 * scratch: temporary working space. Faster access, not backed up. Larger quota, but old files might get deleted. DON'T STORE RESULTS HERE!
+
 
 Here's a synopsis of filesystems on Hawk in Cardiff:
 
@@ -51,7 +53,7 @@ and on Sunbird in Swansea:
 
 ## How much quota do I have left on my home directory?
 
-Login to a login node (e.g. sunbird.swansea.ac.uk or hawklogin.cf.ac.uk) and run the ```myquota``` command. This will tell you how much space is left in your home directory. 
+Login to a head node (e.g. `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk`) and run the ```myquota``` command. This will tell you how much space is left in your home directory.
 
 ~~~
 $ myquota
@@ -71,11 +73,17 @@ SCRATCH DIRECTORY a.cos
 {: .output}
 
 ## Group Filestore
-    
+
+If you have multiple collaborators working on a particular project and
+would like to share common software or data across the project, then
+it will be convenient for you to use a shared filestore. These can be
+created on `/home` (for long-term use, e.g. software) or on `/scratch`
+(for short-term data). If you would like one setup for you, you can
+raise a support ticket or speak to one of your local RSEs.
 
 ## How much scratch have I used?
 
-The ```df``` command tells you how much disk space is left. The ```-h``` argument makes the output easier to read, it gives human readable units like M, G and T for Megabyte, Gigabyte and Terrabyte instead of just giving output in bytes. By default df will give us the free space on all the drives on a system, but we can just ask for the scratch drive by adding ```/scratch``` as an argument after the ```-h```. 
+The ```df``` command tells you how much disk space is left. The ```-h``` argument makes the output easier to read, it gives human readable units like M, G and T for Megabyte, Gigabyte and Terrabyte instead of just giving output in bytes. By default df will give us the free space on all the drives on a system, but we can just ask for the scratch drive by adding ```/scratch``` as an argument after the ```-h```.
 
 ~~~
 $ df -h /scratch
@@ -118,20 +126,17 @@ You can change directory on the remote host by typing a path into the "Remote si
 ![Transferring files using FileZilla](../fig/filezilla6.png)
 
 
-
-
 ### Copying on the command line using SFTP
 ~~~
-Use the ```sftp``` command and connect to the system. This takes the argument of the username followed by an @ symbol and then the hostname. Optionally you can specify what directory to start in by putting a ```:``` symbol after this and adding the directory name. The command below will start in ```/home/s.jane.doe/data```, if no directory is specified then sftp defaults to your home directory. 
+Use the ```sftp``` command and connect to the system. This takes the argument of the username followed by an `@` symbol and then the hostname. Optionally you can specify what directory to start in by putting a ```:``` symbol after this and adding the directory name. The command below will start in ```/home/s.jane.doe/data```, if no directory is specified then sftp defaults to your home directory.
 
 ~~~
 sftp s.jane.doe@sunbird.swansea.ac.uk:/home/s.jane.doe/data
 ~~~
 {: .bash}
 
-
 ~~~
-s.jane.doe@sunbird.swansea.ac.uk's password: 
+s.jane.doe@sunbird.swansea.ac.uk's password:
 Connected to sunbird.swansea.ac.uk.
 Changing to: /home/s.jane.doe/data
 sftp> ls
@@ -162,6 +167,32 @@ lcd - change directory on the local system
 
 
 
+=======
+### Copying data using FileZilla
+
+FileZilla is a graphical SCP/SFTP client available for Windows, Mac and Linux. You can download it from [FileZilla download](https://filezilla-project.org/download.php?type=client)
+
+Open FileZilla and type ```sftp://sunbird.swansea.ac.uk``` or ```sftp://hawklogin.cf.ac.uk``` into the host box. Enter your username and password in the username/password boxes.
+
+![Transferring files using FileZilla](../fig/filezilla1.png)
+
+Click Quickconnect and a connection will be started. The first time you connect you will be asked to verify the host key, tick the "Always trust this host, add key to the cache" box to stop this message appearing again in future.
+
+![Transferring files using FileZilla](../fig/filezilla2.png)
+
+You should now have some files in the right hand side of the window. These are on the remote system, the list on the left hand side is your local system.
+
+![Transferring files using FileZilla](../fig/filezilla3.png)
+
+Files can be transferred either by dragging and dropping them from one side to the other. Or you can right click on a remote file and choose "Download" or a local file and choose "Upload".
+
+![Transferring files using FileZilla](../fig/filezilla4.png)
+![Transferring files using FileZilla](../fig/filezilla5.png)
+
+You can change directory on the remote host by typing a path into the "Remote site:" box. For example type in ```/scratch/username``` (where `username` is your username) to access your scratch directory.
+
+![Transferring files using FileZilla](../fig/filezilla6.png)
+
 
 
 # Exercises
@@ -169,11 +200,12 @@ lcd - change directory on the local system
 > ## Using the `df` command. 
 > 1. Login to a login node
 > 2. Run the command `df -h`.
-> 3. How much space does /scratch have left? 
+> 3. How much space does /scratch have left?
 > 4. If you had to run a large job requiring 10TB of scratch space, would there be enough space for it?
 {: .challenge}
 
 > ## Using the `myquota` command.
+
 > 1. Login to a login node.
 > 2. Run the `myquota` command. 
 > 3. How much space have you used and how much do you have left? 
@@ -181,8 +213,10 @@ lcd - change directory on the local system
 {: .challenge}
 
 > ## Copying files.
+
 > 1. Login to a login node.
 > 2. Create a file called hello.txt by using the nano text editor (or the editor of your choice) and typing `nano hello.txt`. Enter some text into the file and press Ctrl+X to save it. 
 > 3. Use either Filezilla or SCP/SFTP to copy the file to your computer. 
-> 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using Filezilla or SCP/SFTP and examine its conents with nano on the login node. 
+> 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using Filezilla or SCP/SFTP and examine its conents with `nano` on the login node. 
+
 {: .challenge}
