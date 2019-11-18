@@ -93,7 +93,7 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
  * AVAIL tells us if the partition is available.
  * TIMELIMIT tells us if there's a time limit for jobs
  * NODES is the number of nodes in the this partition.
- * STATE, drain means the node will become unavailable once the current job ends. down is off, allow is allocated and mix is ...
+ * STATE, drain means the node will become unavailable once the current job ends. down means the node is off, alloc is fully in use and mix is partially in use.
 
 
 
