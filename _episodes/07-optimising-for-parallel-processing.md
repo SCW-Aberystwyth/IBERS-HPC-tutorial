@@ -117,7 +117,7 @@ through in parallel.
 
 ### A more complex example
 
-As an example we're going to use the example data from the Software Carpentry [Unix Shell lesson](http://swcarpentry.github.io/shell-novice/). This features some data from a researcher named Nelle who is studying the North Pacfic Gyre. She has 1520 data files, each of which measure the relative abundnace of 300 different proteins. Each file is named NENE followed by a 5 digit number identifying the sample and finally an A or a B to identify which of two machines analysed the sample.
+As an example we're going to use the example data from the Software Carpentry [Unix Shell lesson](http://swcarpentry.github.io/shell-novice/). This features some data from a researcher named Nelle who is studying the North Pacfic Gyre. She orginally had 17 data files, each of which measure the relative abundnace of 300 different proteins. But she has now collected some extra data and has 6000 files to process. Each file is named NENE followed by a 5 digit number identifying the sample and finally an A or a B to identify which of two machines analysed the sample.
 
 #### Downloading the Data
 
@@ -127,29 +127,30 @@ then need to be extracted from the zip archive with the `unzip`
 command.
 
 ~~~
-wget http://swcarpentry.github.io/shell-novice/data/data-shell.zip
-unzip data-shell.zip
+wget http://supercomputingwales.github.io/SCW-tutorial/data/north-pacific-gyre.zip
+unzip north-pacific-gyre.zip
 ~~~
 {: .bash}
 
-The data we'll be using is now extracted into the directory
-`data-shell/north-pacific-gyre/2012-07-03`
+The data we'll be using is now extracted into the directory `north-pacific-gyre` go ahead and change into this directory by typing:
 
 ~~~
-cd data-shell/north-pacific-gyre/2012-07-03/
+cd north-pacific-gyre
 ~~~
 {: .bash}
+
+There are five subdirectories for data gathered on different days. The 2012-07-03 contains the original 17 files from the Unix Shell lesson, the others each contain 1500 new files. 
 
 Nelle needs to run a program called `goostats` on each file to process
-it. During the Unix Shell lesson these data were processed in series
-by the following set of commands:
+it. These can be processed in series with the following set of commands:
 
 ~~~
 # Calculate stats for data files.
-for datafile in NENE*[AB].txt
+cd north-pacific-gyre
+for datafile in 2012-07-03/NENE*[AB].txt
 do
     echo $datafile
-    bash goostats $datafile stats-$datafile
+    bash goostats $datafile $datafile.stats
 done
 ~~~
 {: .bash}
@@ -162,11 +163,39 @@ through the list of files produced by `ls` one by one, and runs
 Lets convert this process to run in parallel by using GNU Parallel instead. By running
 
 ~~~
-parallel bash goostats {1} stats-{1} ::: NENE*[AB].txt
+parallel bash goostats {1} {1}.stats ::: 2012-07-03/NENE*[AB].txt
 ~~~
 {: .bash}
 
 We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we insert the `time` command before both the serial and parallel versions of this process we should see the parallel version runs several times faster.
+
+
+> ## Processing a larger dataset with GNU Parallel
+> We've already processed the small 17 file dataset using GNU Parallel, now we're going to try and process one of the large 1500 file datasets. Do the following to see how much faster it is in parallel:
+> 1. Process the first 30 files of the 2012-07-04 dataset serially and measure how long this takes using the time command. 
+> 2. Calculate how long it would take to process all 1500 files serially.
+> 3. Process all 1500 files in the 2012-07-04 dataset in parallel and measure how long this takes. Use the `ps a -u <userid> | grep "bash goostats"` command to see how many processes are running.
+> 4. Use the command lscpu to see how many CPU cores you have. GNU Parallel will automatically try to use them all. How did your actual running time in part 3 compare to the theoretical best you could have achieved?
+> > ## Solution
+> > 1.
+> > ~~~
+> > time for filename in 2012-07-04/NENE000[012]*.txt ; do bash goostats $filename $filename.stats ; done 
+> > ~~~
+> > {: .bash}
+> > Or
+> > ~~~
+> > time for filename in ${ls 2012-07-04/NENE*.txt | head -n 30} ; do bash goostats $filename $filename.stats ; done 
+> > ~~~
+> > {: .bash}
+> > Time taken (on sunbird login node) about 1 minute.
+> > 2. 1 minute for 30 files = 2 seconds per file, 1500 files = 3000 seconds = 50 minutes
+> > 3. time ls 2012-07-04/NENE*.txt | parallel bash goostats {1} {1}.stats 
+> > Takes around 36 seconds on Sunbird login node, uses 88 parallel processes. You might see 90 processes but one of those is grep itself and the other is the parallel master process. 
+> > 4. Should go 88 times faster, 3000/88 = 34, got 36 seconds. 34/36 = 0.9469 or about 95% of the maximum speed. 
+> {: .solution}
+{: .challenge}
+
+
 
 ### Using a list stored in a file
 
@@ -175,7 +204,7 @@ Frequently it is more convenient to specify a list of files, or other arguments,
 To create the file list, recall that we can use `>` to redirect output.
 
 ~~~
-ls NENE*[AB].txt > files_to_process.txt
+ls 2012-07-03/NENE*[AB].txt > files_to_process.txt
 ~~~
 {: .bash}
 
@@ -323,6 +352,35 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 15      :       1542803206.526       2.270      0       0       0       0       srun -n1 -N1 bash goostats NENE02043B.txt stats-NENE02043B.txt
 ~~~
 {: .output}
+
+
+> ## Processing the entire dataset with GNU Parallel
+> We're now going to process the entire dataset (6017 files) using Slurm and some compute nodes. 
+> 1. Create a list of all files using the ls command and store it in a file called `files_to_process.txt`.
+> 2. Use the :::: operator in GNU Parallel and write a Slurm script to process all the files in your `files_to_process.txt` file.
+> 3. Run your Slurm job, after it finishes check you have a stats file for each data file.
+> > ## Solution
+> > 1. ls 2012-07-*/*.txt > files_to_process.txt
+> > 2. 
+> > ~~~
+> > #!/bin/bash --login
+> > ###
+> > #SBATCH --ntasks 80
+> > #SBATCH --output output.%J
+> > #SBATCH --time 00:01:00
+> > #SBATCH --account=scwXXXX
+> > #SBATCH --reservation=scwXXXX_YY
+> > ###
+> > module load parallel
+> > srun="srun --nodes 1 --ntasks 1"
+> > parallel="parallel --max-procs $SLURM_NTASKS --joblog parallel_joblog"
+> > $parallel "$srun bash goostats {1} {1}.stats" :::: files_to_process.txt
+> > ~~~
+> > {: .bash}
+> {: .solution}
+{: .challenge}
+
+
 
 
 ### More complex command handling with Parallel
