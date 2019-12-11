@@ -87,6 +87,10 @@ $ module load python/3.7.0
 $ mkdir -p ~/.local/lib/python3.7/site-packages/
 $ mkdir -p ~/.local/bin
 
+# install cython module
+pip3 install --user cython 
+export PATH=$PATH:~/.local/bin
+
 # download the code for line profiler
 $ git clone https://github.com/rkern/line_profiler.git
 
