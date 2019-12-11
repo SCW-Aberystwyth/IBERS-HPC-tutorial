@@ -355,6 +355,7 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 
 
 > ## Processing the entire dataset with GNU Parallel
+>
 > We're now going to process the entire dataset (6017 files) using Slurm and some compute nodes. 
 > 1. Create a list of all files using the ls command and store it in a file called `files_to_process.txt`.
 > 2. Use the :::: operator in GNU Parallel and write a Slurm script to process all the files in your `files_to_process.txt` file.
@@ -379,6 +380,7 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 > > $parallel "$srun bash goostats {1} {1}.stats" :::: files_to_process.txt
 > > ~~~
 > > {: .bash}
+> >
 > {: .solution}
 {: .challenge}
 
