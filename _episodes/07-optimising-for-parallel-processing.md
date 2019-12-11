@@ -171,11 +171,13 @@ We'll run the same program in parallel. GNU parallel will automatically run on e
 
 
 > ## Processing a larger dataset with GNU Parallel
+>
 > We've already processed the small 17 file dataset using GNU Parallel, now we're going to try and process one of the large 1500 file datasets. Do the following to see how much faster it is in parallel:
 > 1. Process the first 30 files of the 2012-07-04 dataset serially and measure how long this takes using the time command. 
 > 2. Calculate how long it would take to process all 1500 files serially.
 > 3. Process all 1500 files in the 2012-07-04 dataset in parallel and measure how long this takes. Use the `ps a -u <userid> | grep "bash goostats"` command to see how many processes are running.
 > 4. Use the command lscpu to see how many CPU cores you have. GNU Parallel will automatically try to use them all. How did your actual running time in part 3 compare to the theoretical best you could have achieved?
+>
 > > ## Solution
 > > 1.
 > > ~~~
