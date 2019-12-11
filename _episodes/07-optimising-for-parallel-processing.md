@@ -359,9 +359,11 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 > 1. Create a list of all files using the ls command and store it in a file called `files_to_process.txt`.
 > 2. Use the :::: operator in GNU Parallel and write a Slurm script to process all the files in your `files_to_process.txt` file.
 > 3. Run your Slurm job, after it finishes check you have a stats file for each data file.
+>
 > > ## Solution
 > > 1. ls 2012-07-*/*.txt > files_to_process.txt
-> > 2. 
+> > 2. Check files with ls 2012-07-*/*.stats | wc -l (should give 6017)
+> > Slurm script:
 > > ~~~
 > > #!/bin/bash --login
 > > ###
