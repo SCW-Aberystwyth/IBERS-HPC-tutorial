@@ -174,6 +174,8 @@ Commercial software will require the appropriate licenses.
 >    # remove this for your own work
 >    # replace XXXX and YY with the code provided by your instructor
 >    #SBATCH --reservation=scwXXXX_YY
+>    # specify the partition, on hawk change this to dev
+>    #SBATCH --partition=development
 >    ###
 >    module load python/3.7.0
 >    python3 plot.py

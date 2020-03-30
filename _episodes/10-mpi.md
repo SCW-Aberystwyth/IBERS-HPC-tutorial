@@ -45,6 +45,8 @@ $ cat call_hostname.sh
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# specify the partition, change to dev on Hawk
+#SBATCH --partition=development
 ###
 module load mpi
 mpirun hostname
@@ -126,7 +128,8 @@ Now we can run the program by putting the following into py_mpi_hostname.sh
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
-
+# specify the partition, change to dev on Hawk
+#SBATCH --partition=development
 ###
 
 module load mpi
@@ -179,6 +182,7 @@ Again, the unordered output is visible. Now, the relation between the rank and t
 > > #SBATCH --error=mpi_date.err.%J.%N
 > > #SBATCH --account=scwXXXX
 > > #SBATCH --reservation=scwXXXX_YY
+> > #SBATCH --partition=development
 > > ###
 > > module load mpi
 > > mpirun date +%M:%S.%N
@@ -315,6 +319,8 @@ wget https://supercomputingwales.github.io/SCW-tutorial/code/mpi_numpi.py
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# specify the partition, change to dev on Hawk
+#SBATCH --partition=development
 ###
 
 module load python/3.7.0

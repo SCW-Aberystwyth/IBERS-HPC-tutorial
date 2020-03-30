@@ -40,11 +40,13 @@ To get an interactive session, you first need to issue a `salloc` command to res
 
 
 ~~~
-salloc --nodes=1 --account=scwXXXX --reservation=scwXXXX_YY
+salloc --nodes=1 --account=scwXXXX --reservation=scwXXXX_YY --partition=development
 ~~~
 {: .bash}
 
 (You will need to replace `XXXX` to match the account ID and `YY` to match the reservation ID given by your instructor.)
+The --partition=development will launch your job in the development partition which has a 30 minute time limit. This is only available on Sunbird in Swansea,
+on Hawk in Cardiff use --partition=dev instead. 
 
 The salloc command will respond now with a job ID number.
 
@@ -219,6 +221,8 @@ nano batchjob.sh
 # replace XX with the code provided by your instructor
 # remove this for your own work
 #SBATCH --reservation=scwXXXX_YY
+# Specify the development partition, this will give out job a maximum of 30 minutes to run
+#SBATCH --partition=development
 ###
 
 /bin/hostname
@@ -345,6 +349,8 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# Specify the development partition, this will give out job a maximum of 30 minutes to run
+#SBATCH --partition=development
 ###
 
 /bin/sleep 70
@@ -530,6 +536,8 @@ This will allow multiple copies of the command to run. In the example below two 
 # remove this for your own work
 # replace XX with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# Specify the development partition, this will give out job a maximum of 30 minutes to run
+#SBATCH --partition=development
 ###
 
 srun /bin/hostname

@@ -42,6 +42,8 @@ A crude way to achieve this is to have our job submission script just run multip
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# specify the partition, change to dev on Hawk
+#SBATCH --partition=development
 ###
 
 command1 &
@@ -239,6 +241,8 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# specify the partition, change to dev on Hawk
+#SBATCH --partition=development
 ###
 
 # Ensure that parallel is available to us
@@ -280,6 +284,8 @@ to run enough programs to fill all of the nodes that we have allocated. Let's cr
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=scwXXXX_YY
+# specify the partition, change to dev on Hawk
+#SBATCH --partition=development
 ###
 
 # Ensure that parallel is available to us
@@ -375,6 +381,7 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 > > #SBATCH --time 00:01:00
 > > #SBATCH --account=scwXXXX
 > > #SBATCH --reservation=scwXXXX_YY
+> > #SBATCH --partition=development
 > > ###
 > > module load parallel
 > > srun="srun --nodes 1 --ntasks 1"

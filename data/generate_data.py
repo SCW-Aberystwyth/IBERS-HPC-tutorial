@@ -23,13 +23,13 @@ def gen_data(start,end,dirname):
 
         f.close()
 
-
-os.mkdir("north-pacific-gyre/2012-07-03")
+os.mkdir("north-pacific-gyre")
 os.mkdir("north-pacific-gyre/2012-07-04")
 os.mkdir("north-pacific-gyre/2012-07-05")
 os.mkdir("north-pacific-gyre/2012-07-06")
+os.mkdir("north-pacific-gyre/2012-07-07")
 
-gen_data(0,1500,"north-pacific-gyre/2012-07-03")
-gen_data(1500,3000,"north-pacific-gyre/2012-07-04")
-gen_data(3000,4500,"north-pacific-gyre/2012-07-05")
-gen_data(4500,6000,"north-pacific-gyre/2012-07-06")
+gen_data(0,1500,"north-pacific-gyre/2012-07-04")
+gen_data(1500,3000,"north-pacific-gyre/2012-07-05")
+gen_data(3000,4500,"north-pacific-gyre/2012-07-06")
+gen_data(4500,6000,"north-pacific-gyre/2012-07-07")

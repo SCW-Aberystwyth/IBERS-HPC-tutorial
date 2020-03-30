@@ -80,13 +80,18 @@ The ```sinfo``` command tells us the state of the cluster. It lets us know what 
 Clusters are sometimes divided up into partitions. This might separate some nodes which are different to the others (e.g. they have more memory, GPUs or different processors).
 
 ~~~
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-compute*     up 3-00:00:00      1   fail scs0042
-compute*     up 3-00:00:00      1 drain* scs0004
-compute*     up 3-00:00:00      2    mix scs[0018,0065]
-compute*     up 3-00:00:00     86  alloc scs[0001-0003,0005-0017,0019-0035,0043-0046,0049-0064,0066-0072,0097-0122]
-compute*     up 3-00:00:00     32   idle scs[0036-0041,0047-0048,0073-0096]
-gpu          up 2-00:00:00      4   idle scs[2001-2004]
+PARTITION     AVAIL  TIMELIMIT  NODES  STATE NODELIST
+compute*        up 3-00:00:00      1   fail scs0042
+compute*        up 3-00:00:00      1 drain* scs0004
+compute*        up 3-00:00:00      2    mix scs[0018,0065]
+compute*        up 3-00:00:00     86  alloc scs[0001-0003,0005-0017,0019-0035,0043-0046,0049-0064,0066-0072,0097-0122]
+compute*        up 3-00:00:00     32   idle scs[0036-0041,0047-0048,0073-0096]
+development     up      30:00      1   fail scs0042
+development     up      30:00      1 drain* scs0004
+development     up      30:00      2    mix scs[0018,0065]
+development     up      30:00     86  alloc scs[0001-0003,0005-0017,0019-0035,0043-0046,0049-0064,0066-0072,0097-0122]
+development     up      30:00     32   idle scs[0036-0041,0047-0048,0073-0096]
+gpu             up 2-00:00:00      4   idle scs[2001-2004]
 ~~~
 {: .output}
 
