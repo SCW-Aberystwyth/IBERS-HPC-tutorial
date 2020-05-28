@@ -49,15 +49,16 @@ These figures may still be subject to some change and might have been sourced fr
 
 |Partition|Number of Nodes|Cores per node|RAM|Other|
 |-------|----|----|------|----|------|
-|Swansea Compute|122|40|382GB||
+|Swansea Compute|123|40|382GB||
 |Swansea GPU|4|40|382GB|2x Nvidia V100 (5120 core, 16GB RAM)|
 |Swansea Data Lake|1|72|1500GB|Installed with Swansea system, and intended for e.g. Hadoop and Elastic Stack users. Not integrated with the main Sunbird system; contact Support or your RSE team for access details.|
 
 
 |Cluster|Number of Nodes|Cores per node|RAM|Other|
 |-------|----|----|------|----|------|
-|Cardiff Compute|136|40|190GB||
-|Cardiff HTC|26|40|190GB||
+|Cardiff Compute|134|40|190GB||
+|Cardiff Compute AMD|64|64|256GB|AMD EPYC CPUs, not fully operational|
+|Cardiff HTC|63|40|190GB||
 |Cardiff High Memory|26|40|382GB||
 |Cardiff GPU|13|40|382GB|2x Nvidia P100 (3584 core, 16GB RAM)|
 |Cardiff Dev|2|40|190GB||
