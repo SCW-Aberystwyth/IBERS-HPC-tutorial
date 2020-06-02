@@ -1,6 +1,6 @@
 ---
 title: "Working with Modules and Installing Software"
-author: "Colin Sauze", "Ed Bennett"
+author: "Colin Sauze, Ed Bennett"
 teaching: 15
 exercises: 30
 questions:
