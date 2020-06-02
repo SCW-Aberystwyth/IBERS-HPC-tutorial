@@ -141,7 +141,6 @@ If you prefer to use a command line interface to copy files then see the [refere
 {: .challenge}
 
 > ## Using the `myquota` command.
-
 > 1. Login to a login node.
 > 2. Run the `myquota` command. 
 > 3. How much space have you used and how much do you have left? 
@@ -149,10 +148,8 @@ If you prefer to use a command line interface to copy files then see the [refere
 {: .challenge}
 
 > ## Copying files.
-
 > 1. Login to a login node.
 > 2. Create a file called hello.txt by using the nano text editor (or the editor of your choice) and typing `nano hello.txt`. Enter some text into the file and press Ctrl+X to save it. 
 > 3. Use either Filezilla or SCP/SFTP to copy the file to your computer. 
 > 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using Filezilla or SCP/SFTP and examine its conents with `nano` on the login node. 
-
 {: .challenge}
