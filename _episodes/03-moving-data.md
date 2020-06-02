@@ -10,8 +10,11 @@ objectives:
  - "Understand the difference between home and scratch directories"
  - "Understand how to copy files between your computer and your Supercomputing Wales home/scratch directories"
 keypoints:
- - "Scratch and home are per site."
- - "Scratch is faster and has no quotas, but short-term. home is slower and has quotas, but is long-term."
+ - "The home directory is the default place to store data."
+ - "The scratch directory is a larger space for temporary files."
+ - "On Hawk in Cardiff home is backed up but is also a slower disk."
+ - "On Sunbird in Swansea neither is backed up."
+ - "Quotas on home are much smaller than scratch."
 ---
 
 
