@@ -32,8 +32,8 @@ Here's a synopsis of filesystems on Hawk in Cardiff:
 |Name|Path|Default Quota|Disk Size|Backed Up|
 |------|---|----|-----|---|-----|
 |Home|/home/user.name|50GB|420TB|Yes|
-|Project|/home/scwXXXX|Negotiable|420TB (same disk as home)|Yes|
-|Scratch|/scratch/user.name|20TB + 10million files|692TB|No|
+|Project|/home/scwXXXX|Negotiable|12TB (same disk as home)|Yes|
+|Scratch|/scratch/user.name|20TB + 10million files|1200TB|No|
 
 
 and on Sunbird in Swansea:
