@@ -2,7 +2,7 @@
 title: "Filesystems and Storage"
 author: "Colin Sauze, Ed Bennett, Jarno Rantaharju"
 teaching: 15
-exercises: 30
+exercises: 10
 questions:
  - "Where can I store my data?"
  - "What is the difference between scratch and home filestore?"
