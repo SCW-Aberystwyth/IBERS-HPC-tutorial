@@ -215,7 +215,7 @@ ls 2012-07-03/NENE*[AB].txt > files_to_process.txt
 Now, to tell Parallel to use this file as a list of arguments, we can use `::::` instead of `:::`.
 
 ~~~
-parallel bash goostats {1} stats-{1} :::: files_to_process.txt
+parallel bash goostats {1} {1}.stats :::: files_to_process.txt
 ~~~
 {: .bash}
 
@@ -249,7 +249,7 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 module load parallel
 
 # Run the tasks:
-parallel bash goostats {1} stats-{1} :::: files_to_process.txt
+parallel bash goostats {1} {1}.stats :::: files_to_process.txt
 ~~~
 {: .bash}
 
@@ -301,7 +301,7 @@ parallel="parallel --max-procs $SLURM_NTASKS --joblog parallel_joblog"
 # --joblog name     parallel's log file of tasks it has run
 
 # Run the tasks:
-$parallel "$srun bash goostats {1} stats-{1}" :::: files_to_process.txt
+$parallel "$srun bash goostats {1} {1}.stats" :::: files_to_process.txt
 ~~~
 {: .bash}
 
