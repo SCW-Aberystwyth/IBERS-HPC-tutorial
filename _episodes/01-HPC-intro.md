@@ -29,7 +29,7 @@ These tools are becoming the <em>de facto</em> standard tools in most research d
 
 ## What are some of reasons to use a cluster?
 
-* Your computer does not have enough resources to run the desired analysis. *E.g.* memory, processors, disk space, or network bandwidth.
+* Your computer does not have enough resources to run the desired analysis&mdash;for example, memory, processors, disk space, or network bandwidth.
 * You want to produce results faster than your computer can.
 * You cannot install software in your computer. That is, the application does not have support for your operating system, conflicts with other existing applications, or softare licensing does not allow for installation on personal laptops.
 * You want to leave something running while your computer would be turned off or doing something else.
@@ -37,7 +37,7 @@ These tools are becoming the <em>de facto</em> standard tools in most research d
 
 ## What does a cluster look like?
 
-"High Performance Computing most generally refers to the practice of aggregating computing power in a way that delivers much higher performance than one could get out of a typical desktop computer or workstation in order to solve large problems in science, engineering, or business." ---[InsideHPC](http://insidehpc.com/hpc-basic-training/what-is-hpc/)
+"High Performance Computing most generally refers to the practice of aggregating computing power in a way that delivers much higher performance than one could get out of a typical desktop computer or workstation in order to solve large problems in science, engineering, or business." &mdash;[InsideHPC](http://insidehpc.com/hpc-basic-training/what-is-hpc/)
 
 Clusters are simply a grouping of computers with the same components (RAM, disk, processors/cores, and networking cards) as those in your desktop or laptop, but with more umph! and are networked with high-speed interconnect that can be accessed (indirectly) through software, the scheduler, that manages simultaneous execution of jobs, or analyses, by multiple persons.
 
