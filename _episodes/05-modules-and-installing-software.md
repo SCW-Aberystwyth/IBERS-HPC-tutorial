@@ -22,35 +22,53 @@ instead, it is loaded into your environment incrementally using a module system.
 The `module` command controls this.
 You can get a list of available software with the `module avail` command. This should return a long list of available software.
 
-One common piece of software that isn't installed on the Supercomputing Wales hubs (without a module) is Python version 3. If we attempt to run `python3` from the command line it will respond with an error:
+One common piece of software that isn't installed on the Supercomputing Wales hubs (without a module) is R. If we attempt to run `R` from the command line it will respond with an error:
 
 ~~~
-[s.jane.doe@sl1 ~]$ python3
+[s.jane.doe@sl1 ~]$ R
 ~~~
 {: .bash}
 
 ~~~
--bash: python3: command not found
+-bash: R: command not found
 ~~~
 {: .output}
 
-**Note that the login nodes and the compute nodes have identical
+The login nodes and the compute nodes have identical
 configurations in terms of what software is available, so you can
-discover if your program will run from the login nodes**
+discover if your program will run from the login nodes. (The only exception
+to this is if your software requires GPUs; since these are not available
+on the login nodes, you cannot test GPU software there.)
 
 From the output of the `module avail` command there should have been
-an entry `anaconda/2019.03` in the `/app/local/modules/langauges` section
-near the bottom. Anaconda is a distribution including a variety of
-Python packages, and tools for managing them. Let's go ahead and load it.
+an entry `R/3.6.2` in the `/apps/modules/langauges` section
+near the top. 
 
 ~~~
-[s.jane.doe@sl1 ~]$ module load anaconda/2019.03
-[s.jane.doe@sl1 ~]$ source activate
-[s.jane.doe@sl1 ~]$ python3
-Python 3.7.0 (default, Jul 13 2018, 10:08:05)
-[GCC Intel(R) C++ gcc 4.8.5 mode] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> exit()
+[s.jane.doe@sl1 ~]$ module load R/3.6.2
+[s.jane.doe@sl1 ~]$ R
+WARNING: ignoring environment value of R_HOME
+
+R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> q()
+Save workspace image? [y/n/c]: n
 [s.jane.doe@sl1 ~]$
 ~~~
 {: .bash}
@@ -58,7 +76,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 > ## Legacy HPC Wales and Raven Modules
 > All of the old modules which were available on HPC Wales and the old Cardiff Raven system
 > are available by running either `module load hpcw` or `module load raven`. (Raven modules are only available on Hawk.)
-> Please note that much of this software is outdated and may by suboptimal as its not compiled
+> Please note that much of this software is outdated and may by suboptimal as it is not compiled
 > to take advantage of the newer CPU architectures on Supercomputing Wales.
 {: .callout}
 
@@ -70,16 +88,51 @@ Python is a popular language for researchers to use and has modules
 module you need won't be installed. Many modules can be installed
 using the `pip` (or `pip3` with Python 3) command. Since we don't have
 administrative rights to the supercomputer, we can't install these
-into the shared base Anaconda environment; instead, we need to create
+into the shared base environment; instead, we need to create
 a local one.
 
+We recommend using Conda for this. Conda is a package manager
+that can create self-contained Python environments, and install various
+versions of Python and other related dependencies into them.
+Anaconda is a popular distribution of Python for scientific computing
+that is based on Conda, including a large number of frequently-used
+packages. Anaconda is available on Supercomputing Wales, and can then
+be used to build new Conda environments.
+
+To load Anaconda, two commands are necessary:
+
 ~~~
-$ conda create -n scw_test python=3.7
+> module load anaconda/2021.05
+> source activate
+~~~
+{: .language-bash}
+
+The first of these we saw above; the second initialises Conda within
+your current shell.
+
+Since we are using Conda for the first time, it is useful to add
+`conda-forge` to our list of Conda channels. This will give us access
+to a wider range of pre-built Conda packages.
+
+~~~
+$ conda config --add channels conda-forge
+~~~
+{: .language-bash}
+
+With this done, we can now use Conda to create
+a new environment to install the packages that we want for our own work:
+
+~~~
+$ conda create -n scw_test python=3.9 mamba
 ~~~
 {: .bash}
 
 This tells the `conda` command to `create` a new environment, to
-give it the name `scw_test`, and to install Python 3.7 into it.
+give it the name `scw_test`, and to install Python 3.9 and Mamba into
+it. Mamba is an alternative version of Conda, that can solve the
+complicated problem of getting compatible versions of all of your
+requested packages simultaneously more quickly than Conda can.
+
 Conda will take a little time to work out what it needs to install,
 and once you confirm by typing `y`, then place it in a new directory
 in `~/.conda/envs`.
@@ -100,19 +153,23 @@ where Python will run from if you run `python`.
 
 So far we have created a relatively bare environemnt, but we can
 install packages into the new environment just as we can on our own
-machines. Let's now install Matplotlib into this environment:
+machines. Let's now install Matplotlib and a recent Tensorflow
+version into this environment:
 
 ~~~
-$ conda install matplotlib
+$ mamba install matplotlib tensorflow-gpu\>=2.5
 ~~~
 {: .bash}
 
-Conda automatically works out which extra packages need to be present
-for Matplotlib to work, and then prompts to install them.
+Mamba automatically works out which extra packages need to be present
+for Matplotlib and Tensorflow to work, and then prompts to install them.
+In the latter case, since we requested the GPU version of Tensorflow,
+it automatically installs all of the requisite CUDA libraries as well.
 
-You could alternatively have specified `matplotlib` directly to the
+You could alternatively have specified the packages directly to the
 `conda create` command, and it would have been installed when the
-environment was created.
+environment was created. (This would use Conda's solver, though,
+which would take longer to work out what needed installing.)
 
 If you wanted to create a full Anaconda Python installation to base
 your environment on, you can do this with
