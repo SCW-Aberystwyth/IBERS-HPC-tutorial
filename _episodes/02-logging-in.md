@@ -19,8 +19,20 @@ keypoints:
 
 # Logging in
 
-Your username is your institutional ID prefixed by `a.` for
-Aberystwyth users, `b.` for Bangor users, `c.` for Cardiff users and `s.` for Swansea users. External collaborators will have a username beginning with `x.`.
+Before we can log in to Supercomputing Wales, we need to set a password.
+The Supercomputing Wales clusters use a separate password database to
+the four partner institutions, so the password must be set separately
+from (and should be different to) your institutional login. To do this
+visit [MySCW][myscw], log in with your institutional credentials, and
+use the "Reset SCW Password" link in the left sidebar.
+
+While you are visiting the MySCW dashboard, take a note of your
+Supercomputing Wales username. Your username is
+usually your institutional ID prefixed by `a.` for
+Aberystwyth users, `b.` for Bangor users, `c.` for Cardiff users, and `s.`
+for Swansea users. (Occasionally the part of the username after the `.`
+will vary from this pattern, but the prefix should always match this.)
+External collaborators will have a username beginning with `x.`.
 
 Aberystwyth and Swansea users (and their external collaborators) should log in to the Swansea Sunbird system by typing:
 
@@ -40,6 +52,25 @@ $ ssh username@hawklogin.cf.ac.uk
 If you use Windows and haven't installed the Git bash shell, you can instead use [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 and enter either `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk` in the hostname box.
 
+> ## Lockout
+>
+> Since the Supercomputing Wales clusters allow connections from
+> anywhere in the world, they need to be relatively tough to avoid
+> unscrupulous hackers gaining access to your research data.
+> This means that if you enter a wrong password (or SSH key) too
+> many times in short succession, then your computer will be blocked
+> from accessing the cluster for a few hours.
+>
+> To avoid this happening in a workshop, we recommend raising a hand
+> or otherwise letting an instructor know if your first attempt to log
+> in fails.
+>
+> If you have been locked out and urgently need to get back in
+> without waiting for the block to expire, then
+> [contact the support desk][scw-support]. During working hours
+> a member of the support team will be available to assist.
+{: .callout}
+
 
 ## What's available?
 
@@ -50,7 +81,6 @@ These figures may still be subject to some change and might have been sourced fr
 |Partition|Number of Nodes|Cores per node|RAM|Other|
 |-------|----|----|------|----|------|
 |Swansea Compute|123|40|382GB||
-|Swansea GPU|4|40|382GB|2x Nvidia V100 (5120 core, 16GB RAM)|
 |Swansea Data Lake|1|72|1500GB|Installed with Swansea system, and intended for e.g. Hadoop and Elastic Stack users. Not integrated with the main Sunbird system; contact Support or your RSE team for access details.|
 
 
@@ -60,12 +90,13 @@ These figures may still be subject to some change and might have been sourced fr
 |Cardiff Compute AMD|64|64|256GB|AMD EPYC CPUs, not fully operational|
 |Cardiff HTC|63|40|190GB||
 |Cardiff High Memory|26|40|382GB||
-|Cardiff GPU|13|40|382GB|2x Nvidia P100 (3584 core, 16GB RAM)|
 |Cardiff Dev|2|40|190GB||
 |Cardiff Data Lake|2|?|?|Will be installed later. Intended for Hadoop and Elastic Stack users.|
 
 Aberystwyth and Swansea users are expected to use the Swansea system and will need to make a case for why they would need to use the Cardiff system. Bangor and Cardiff users are expected to use Cardiff, and external users are expected to use the same system as the owner of the project of which they are a member.
 
+(There are also a number of GPU nodes available; these will be discussed
+in [Running on GPUs](08-running-on-gpus).)
 
 ### Slurm
 
@@ -76,7 +107,7 @@ Other clusters might run different job management software such as LSF, Sun Grid
 
 ### How busy is the cluster?
 
-The ```sinfo``` command tells us the state of the cluster. It lets us know what nodes are available, how busy they are and what state they are in.
+The `sinfo` command tells us the state of the cluster. It lets us know what nodes are available, how busy they are and what state they are in.
 
 Clusters are sometimes divided up into partitions. This might separate some nodes which are different to the others (e.g. they have more memory, GPUs or different processors).
 
@@ -127,3 +158,5 @@ gpu             up 2-00:00:00      4   idle scs[2001-2004]
 > 5. Try `sinfo --long`, what extra information does this give?
 {: .challenge}
 
+[myscw]: https://my.supercomputing.wales
+[scw-support]: https://portal.supercomputing.wales/index.php/index/submit-support-ticket/
