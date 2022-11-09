@@ -164,4 +164,4 @@ It shows that the GPU `/device:GPU:0` is available to this job.
 > and test whether it works.
 {: .challenge}
 
-[accelerateai][https://sa2c.github.io/AccelerateAI]
+[accelerateai]: https://sa2c.github.io/AccelerateAI
