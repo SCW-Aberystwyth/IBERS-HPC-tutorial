@@ -8,13 +8,12 @@ questions:
  - "What is the difference between scratch and home filestore?"
 objectives:
  - "Understand the difference between home and scratch directories"
- - "Understand how to copy files between your computer and your Supercomputing Wales home/scratch directories"
+ - "Understand how to copy files between your computer and your Bert home/scratch directories"
 keypoints:
  - "The home directory is the default place to store data."
  - "The scratch directory is a larger space for temporary files."
- - "On Hawk in Cardiff home is backed up but is also a slower disk."
- - "On Sunbird in Swansea neither is backed up."
  - "Quotas on home are much smaller than scratch."
+ - "The SSD scratch is faster than regular scratch, but smaller."
 ---
 
 
@@ -25,28 +24,20 @@ Storage on most compute systems is not what and where you think they are! Physic
 
 There are multiple storage/filesystems options available for you to do your work. The most common are:
 
-* home: where you land when you first login. 50 GB per user. Slower access, backed up (Cardiff only). Used to store your work long term. 
-* project: shared between all users of a project. Same filesystem as home. 
-* scratch: temporary working space. Faster access, not backed up. Larger quota, but old files might get deleted. DON'T STORE RESULTS HERE!
+* home: where you land when you first login. 50 GB per user by default. Slower access, backed up. Used to store your work long term. 
+* groups: shared between all users of a project. If you're group hasn't got a space on here then you need to request one.
+* scratch: temporary working space, not backed up. Larger quota, but old files might get deleted. DON'T STORE THINGS HERE LONG TERM!
+* fast scratch: faster scratch space using solid state disks. You need to request access to this.
 
 
-Here's a synopsis of filesystems on Hawk in Cardiff:
-
-|Name|Path|Default Quota|Disk Size|Backed Up|
-|------|---|----|-----|---|-----|
-|Home|/home/user.name|50GB|420TB|Yes|
-|Project|/home/scwXXXX|Negotiable|12TB (same disk as home)|Yes|
-|Scratch|/scratch/user.name|20TB + 10million files|1200TB|No|
-
-
-and on Sunbird in Swansea:
-
+Here's a synopsis of filesystems on Bert:
 
 |Name|Path|Default Quota|Disk Size|Backed Up|
 |------|---|----|-----|---|-----|
-|Home|/home/user.name|100GB|231TB|No|
-|Project|/home/scwXXXX|Negotiable|231TB (same disk as home)|No|
-|Scratch|/scratch/user.name|20TB + 10million files|808TB|No|
+|Home|/ibers/ernie/home/user.name|250GB|42TB|Yes|
+|Groups|/ibers/repository03/groups/group.name|None currently|200TB|Yes|
+|Scratch|/scratch/user.name|None currently|109TB|No|
+|Fast Scratch|/fast-scratch/user.name|None currently|5.2TB|No|
 
 
 **Important!! Ensure that you don't store anything longer than necessary on scratch, this can negatively affect other people’s jobs on the system.**
@@ -56,22 +47,15 @@ and on Sunbird in Swansea:
 
 ## How much quota do I have left on my home directory?
 
-Login to a head node (e.g. `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk`) and run the ```myquota``` command. This will tell you how much space is left in your home directory.
+Login to the cluster (e.g. `bert.ibers.aber.ac.uk`) and run the ```quota``` command. This will tell you how much space is left in your home directory.
 
 ~~~
-$ myquota
+$ quota
 ~~~
 {: .bash}
 
 ~~~
-HOME DIRECTORY a.cos
-     Filesystem    used   quota   limit   grace   files   quota   limit   grace
-    /lustrehome   48.4G    100G    110G       -  206182  220000  230000       -
-
-SCRATCH DIRECTORY a.cos
-     Filesystem    used   quota   limit   grace   files   quota   limit   grace
-       /scratch  63.29G  19.56T  20.06T       -  313075  9851800 10101800       -
-
+Quotas aren't currently working, don't abuse this!
 ~~~
 {: .output}
 
@@ -79,10 +63,8 @@ SCRATCH DIRECTORY a.cos
 
 If you have multiple collaborators working on a particular project and
 would like to share common software or data across the project, then
-it will be convenient for you to use a shared filestore. These can be
-created on `/home` (for long-term use, e.g. software) or on `/scratch`
-(for short-term data). If you would like one setup for you, you can
-raise a support ticket or speak to one of your local RSEs.
+it will be convenient for you to use a shared filestore. If you would like 
+one setup for you, you can raise a support ticket by emailing ibers-cs@aber.ac.uk.
 
 ## How much scratch have I used?
 
@@ -94,20 +76,20 @@ $ df -h /scratch
 {: .bash}
 
 ~~~
-Filesystem                                Size  Used Avail Use% Mounted on
-172.2.1.51@o2ib:172.2.1.52@o2ib:/scratch  692T   57T  635T   9% /scratch
+Filesystem         Size  Used Avail Use% Mounted on
+nfs01-ib:/scratch  109T   11T   98T  10% /scratch
 ~~~
 {: .output}
 
-## Copying data from your PC to Supercomputing Wales
+## Copying data from your PC to the cluster
 
-You can copy files to/from your Supercomputing Wales home and scratch drives using the secure copy protocol (SCP) or secure file transfer protocol (SFTP) and connecting to Sunbird or Hawk. 
+You can copy files to/from your home and scratch drives using the secure copy protocol (SCP) or secure file transfer protocol (SFTP) and connecting to Bert. 
 
 ### Copying data using Filezilla
 
 Filezilla is a graphical SCP/SFTP client available for Windows, Mac and Linux. You can download it from [Filezilla download](https://filezilla-project.org/download.php?type=client)
 
-Open filezilla and type ```sftp://sunbird.swansea.ac.uk``` or ```sftp://hawklogin.cf.ac.uk``` into the host box. Enter your username and password in the username/password boxes.
+Open filezilla and type ```sftp://bert.ibers.aber.ac.uk``` into the host box. Enter your username and password in the username/password boxes.
 
 ![Transferring files using FileZilla](../fig/filezilla1.png)
 
@@ -137,22 +119,15 @@ If you prefer to use a command line interface to copy files then see the [refere
 # Exercises
 
 > ## Using the `df` command. 
-> 1. Login to a login node
+> 1. Login to Bert
 > 2. Run the command `df -h`.
 > 3. How much space does /scratch have left?
 > 4. If you had to run a large job requiring 10TB of scratch space, would there be enough space for it?
 {: .challenge}
 
-> ## Using the `myquota` command.
-> 1. Login to a login node.
-> 2. Run the `myquota` command. 
-> 3. How much space have you used and how much do you have left? 
-> 4. If you had a job that resulted in 60GB of files would you have enough space to store them?
-{: .challenge}
-
 > ## Copying files.
-> 1. Login to a login node.
+> 1. Login to Bert
 > 2. Create a file called hello.txt by using the nano text editor (or the editor of your choice) and typing `nano hello.txt`. Enter some text into the file and press Ctrl+X to save it. 
 > 3. Use either Filezilla or SCP/SFTP to copy the file to your computer. 
-> 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using Filezilla or SCP/SFTP and examine its conents with `nano` on the login node. 
+> 4. Create a file on your computer using a text editor. Copy that file to your Bert home directory using Filezilla or SCP/SFTP and examine its conents with `nano` on the login node. 
 {: .challenge}

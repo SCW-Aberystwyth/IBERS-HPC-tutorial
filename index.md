@@ -3,9 +3,9 @@ layout: lesson
 root: .
 ---
 
-# Introduction to Supercomputing Wales
+# Introduction to using Slurm on Bert
 
-This lesson introduces using the Supercomputing Wales HPC system.
+This lesson introduces using the Slurm Scheduler on Bert, the HPC system in the Faculty of Earth and Life Sciences at Aberystwyth University.
 
 > ## Prerequisites
 >

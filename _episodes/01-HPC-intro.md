@@ -1,14 +1,13 @@
 ---
-title: "Supercomputing Wales Introduction"
+title: "HPC Introduction"
 author: "Colin Sauze, Ed Bennett, Jarno Rantaharju"
 teaching: 10
 exercises: 0
 questions:
- - "What is Supercomputing Wales and how do I get access to it?"
+ - "What is an HPC and how do I get access to it?"
 keypoints:
  - "A cluster is a group of computers connected together to act as one."
  - "Clusters are formed of nodes, each usually has several processors and 10s or hundreds of gigabytes of RAM."
- - "Supercomputing Wales has clusters for researchers at Welsh universities to use"
 objectives:
  - "Understand what that a cluster is multiple computers connected together"
  - "Understand that clusters typically have shared storage"
@@ -19,7 +18,7 @@ objectives:
 # Prior Knowledge/Pre-requesites
 
 * Basic use of the Linux command line, as covered in the Software Carpentry Introduction to the Unix Shell Lesson.
-* An account on Supercomputing Wales.
+* An account on Bert
 
 # Cluster basics
 

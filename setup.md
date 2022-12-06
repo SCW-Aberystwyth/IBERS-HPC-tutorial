@@ -4,36 +4,25 @@ title: Setup
 root: .
 ---
 
-To follow this workshop, you will need three things: an account on the Supercomputing Wales facility,
+To follow this workshop, you will need three things: an account on Bert,
 an SSH client, and the Filezilla application for transferring files.
 
 {% comment %} {% endcomment %}
 <div id="scw">
-  <h3>Supercomputing Wales</h3>
+  <h3>Request an account</h3>
 
-  In this workshop we will use the Supercomputing Wales facilities to
-  learn to use High-Performance Computing. For this, you will need an
-  account on the Supercomputing Wales facilities.
+  In this workshop we will use Slurm on Bert in order to use High-Performance Computing. For this, you will need an
+  account on Bert.
 
   <ol>
-    <li>Visit <a href="https://my.supercomputing.wales/">My
-    Supercomputing Wales</a></li>
-	<li>Sign in with your Swansea University email and password</li>
-	<li>Fill in the form requesting a Supercomputing Wales
-    account. Your aaccount request will be processed by an
-    administrator.</li>
+    <li>Visit <a href="https://bioinformatics.ibers.aber.ac.uk/request.html">
+    The account request page (while on campus/VPN)</a></li>
+	<li>Fill in the form requesting an account.
+    Your account request will be processed by an administrator.</li>
 	<li>Once you receive an email indicating that your account has been
-    created, then revisit <a
-    href="https://my.supercomputing.wales/">My Supercomputing
-    Wales</a>, and log in again if necessary.</li>
-	<li>Click the "Reset SCW Password" button, and enter a password
-    that you will use to access the Supercomputing Wales
-    hardware. (This does not have to be the same as your Swansea
-    University password.) Click Submit.</li>
-	<li>Under "Join a project", enter {{page.scw_project}} as the
-    project code for this training session, and click "Join".</li>
+    created</li>
   </ol>
-</div> {% comment %} End of 'Supercomputing Wales' section. {% endcomment %}
+</div> 
 
 {% comment %} {% endcomment %}
 <div id="SSH">
