@@ -31,48 +31,38 @@ There are two ways to run jobs on a cluster. One, usually done at the start, is 
 interactive/foreground session on a compute node. This will give you a command prompt on a compute node and let you run the commands of your choice there.
 
 If you want to experiment with some code and test it you should run it
-this way. ** Don't run jobs on the login nodes ** -- the two 40-core
-login nodes are dedicated to letting users connect and compile their
-software; their resources are negligible compared to the 5,000 CPU
-cores on the compute nodes.
+this way. ** Don't run jobs on the login nodes ** -- the login node
+is dedicated to letting users connect and compile their
+software; its resources are negligible compared to the compute nodes.
 
 To get an interactive session, you first need to issue a `salloc` command to reserve some resources.
 
 
 ~~~
-salloc --nodes=1 --account=scwXXXX --reservation=scwXXXX_YY --partition=development
+salloc --nodes=1 --partition=intel --reservation=XXXX --time=0:30:0
 ~~~
 {: .bash}
 
-(You will need to replace `XXXX` to match the account ID and `YY` to match the reservation ID given by your instructor.)
-The --partition=development will launch your job in the development partition which has a 30 minute time limit. This is only available on Sunbird in Swansea,
-on Hawk in Cardiff use --partition=dev instead. 
+(You will need to replace `XXXX` to match the reservation ID given by your instructor.)
+The --time=0:30:0 will launch your job with a 30 minute time limit.
 
 The salloc command will respond now with a job ID number.
 
 ~~~
 salloc: Granted job allocation 21712
 salloc: Waiting for resource configuration
-salloc: Nodes scs0018 are ready for job
+salloc: Nodes node003 are ready for job
 ~~~
 {: .output}
 
-> ## Acccounts and Reservations
+> ## Reservations
 >
-> We can optionally specify an account and reservation ID to
-> Slurm. The account ID tells the system which  project your job will be
-> accounted against, if you are a member of multiple projects some might
-> have different priorities and limitations. 
->
-> A reservation is where some compute nodes have been reserved for a
+> We can optionally specify a reservation ID to
+> Slurm. A reservation is where some compute nodes have been reserved for a
 > particular project at a particular time. To ensure nodes are available
 > for this course we may have obtained a reservation. Your instructor
-> will tell you which acccount and reservation to use here. The account
-> can be specified either through the `--account` option to `salloc`
-> (and to the `sbatch` command which we'll use soon) and the reservation
-> through the `--reservation` option. Alternatively, these can be
-> specified in the `SALLOC_ACCOUNT`, `SBATCH_ACCOUNT`,
-> `SALLOC_RESERVATION` and `SBATCH_RESERVATION` environment variables.
+> will tell you which reservation to use here. Alternatively, these can be
+> specified in the `SALLOC_RESERVATION` and `SBATCH_RESERVATION` environment variables.
 {: .callout}
 
 We have now allocated ourselves a host to run a program on. The `-n 1`
@@ -81,15 +71,6 @@ tells Slurm how many copies of the task we will be running. The
 task for every node we are allocated. We could increase either of
 these numbers if we want to run multiple copies of a task and if we
 want to run more than one copy per node.
-
-The `--account` option tells Slurm which project to account your usage
-against, if you are only a member of one project then this will
-default to that project. If you're a member of multiple projects then
-you must specify this---if you do not, the job will fail to submit,
-and you will receive an error reminding you to set it. The accounting
-information is used to measure what resources a project has consumed
-and to prioritise its use, so its important to choose the right
-project.
 
 To ensure nodes are available for this training workshop a reservation
 may have been made to prevent anyone else using a few nodes. In order
@@ -109,11 +90,11 @@ srun --pty /bin/bash
 
 If you run command above you will see the hostname in the prompt
 change to the name of the compute node that Slurm has allocated to
-you. In the example below the compute node is called `scs0018`.
+you. In the example below the compute node is called `node003`.
 
 ~~~
-[s.jane.doe@sl1 ~]$ srun --pty /bin/bash
-[s.jane.doe@scs0018 ~]$
+[abc1@login01(aber) ~]$ srun --pty /bin/bash
+[abc1@node003 ~]$
 ~~~
 {: .output}
 
@@ -125,7 +106,7 @@ hostname
 {: .bash}
 
 ~~~
-scs0018
+node003
 ~~~
 {: .output}
 
@@ -137,9 +118,9 @@ hostname prompt should change back to the login node's name
 (e.g. `sl1` or `cl1`).
 
 ~~~
-[s.jane.doe@scs0018  ~]$ exit
+[abc1@node003  ~]$ exit
 exit
-[s.jane.doe@sl1 ~]$
+[abc1@login01(aber) ~]$
 ~~~
 {: .output}
 
@@ -150,20 +131,20 @@ all users' jobs, which is a bit overwhelming, so we can use `--user=`
 and our username to filter to our own jobs only.
 
 ~~~
-squeue --user=s.jane.doe
+squeue --user=abc1
 ~~~
 {: .bash}
 
 ~~~
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           21712   compute     bash s.jane.doe  R       3:58      1 scs0018
+           21712   intel       bash       abc1  R       3:58      1 node003
 ~~~
 {: .output}
 
 To relinquish the node allocation we need to issue another exit command.
 
 ~~~
-[s.jane.doe@sl1 ~]$ exit
+[abc1@login01(aber) ~]$ exit
 ~~~
 {: .bash}
 
@@ -178,7 +159,7 @@ salloc: Relinquishing job allocation 21712
 At this point our job is complete and we no longer hold any allocations. We can confirm this again with the `squeue` command.
 
 ~~~
-[s.jane.doe@sl1 ~]$ squeue --user=s.jane.doe
+[abc1@login01(aber) ~]$ squeue --user=s.jane.doe
 ~~~
 {: .bash}
 
@@ -214,15 +195,13 @@ nano batchjob.sh
 #SBATCH --mem-per-cpu=10
 # run a single task, using a single CPU core
 #SBATCH --ntasks=1
-# specify our current project
-# change this for your own work
-#SBATCH --account=scwXXXX
+
 # specify the reservation we have for the training workshop
 # replace XX with the code provided by your instructor
 # remove this for your own work
-#SBATCH --reservation=scwXXXX_YY
-# Specify the development partition, this will give out job a maximum of 30 minutes to run
-#SBATCH --partition=development
+#SBATCH --reservation=XXXX
+# Specify the intel partition
+#SBATCH --partition=intel
 ###
 
 /bin/hostname
@@ -265,7 +244,7 @@ will tell us the name of the compute node which ran our job.
 Lets go ahead and submit this job with the `sbatch` command.
 
 ~~~
-[s.jane.doe@sl1 ~]$ sbatch batchjob.sh
+[abc1@login01(aber) ~]$ sbatch batchjob.sh
 ~~~
 {: .bash}
 
@@ -280,32 +259,32 @@ Submitted batch job 3739464
 Our job should only take a couple of seconds to run, but if we are fast we might see it in the `squeue` list.
 
 ~~~
-[s.jane.doe@sl1 ~]$ squeue --user=s.jane.doe
+[abc1@login01(aber) ~]$ squeue --user=s.jane.doe
 ~~~
 {: .bash}
 
 ~~~
              JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
-           3739464      work hostname jane.doe  R       0:01      1 scs0018
+           3739464      work hostname jane.doe  R       0:01      1 node003
 ~~~
 {: .output}
 
 Once the job is completed two new files should be created, one called `hostname.out.3739464` and one called `hostname.err.3739464`. The `.out` file is the output from the command we ran and the `.err` is the errors from that command. Your job files will have different names as they will contain the job ID you were allocated and not `3739464`. Lets go ahead and look at the `.out` file:
 
 ~~~
-[s.jane.doe@sl1 ~]$ cat hostname.out.373464
+[abc1@login01(aber) ~]$ cat hostname.out.373464
 ~~~
 {: .bash}
 
 ~~~
-scs0018
+node003
 ~~~
 {: .output}
 
 If we check the `.err` file it should be blank:
 
 ~~~
-[s.jane.doe@sl1 ~]$ cat hostname.err.373464
+[abc1@login01(aber) ~]$ cat hostname.err.373464
 ~~~
 {: .bash}
 
@@ -321,7 +300,7 @@ Lets edit our batch file to run the command `/bin/sleep 70` before `/bin/hostnam
 
 
 ~~~
-[s.jane.doe@sl1 ~]$ nano batchjob.sh
+[abc1@login01(aber) ~]$ nano batchjob.sh
 ~~~
 {: .bash}
 
@@ -342,14 +321,11 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 #SBATCH --mem-per-cpu=10
 # run a single task, using a single CPU core
 #SBATCH --ntasks=1
-# specify our current project
-# change this for your own work
-#SBATCH --account=scwXXXX
 # specify the reservation we have for the training workshop
 # remove this for your own work
 # replace XXXX and YY with the code provided by your instructor
-#SBATCH --reservation=scwXXXX_YY
-# Specify the development partition, this will give out job a maximum of 30 minutes to run
+#SBATCH --reservation=XXXX
+# Specify the intel partition
 #SBATCH --partition=development
 ###
 
@@ -362,7 +338,7 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 Now lets resubmit the job.
 
 ~~~
-[s.jane.doe@sl1 ~]$  sbatch batchjob.sh
+[abc1@login01(aber) ~]$  sbatch batchjob.sh
 ~~~
 {: .bash}
 
@@ -374,18 +350,18 @@ Submitted batch job 3739465
 After approximately one minute the job will disappear from the `squeue` output, but this time the `.out` file should be empty and the `.err` file will contain an error message saying the job was cancelled:
 
 ~~~
-[s.jane.doe@sl1 ~]$  cat hostname.err.3739465
+[abc1@login01(aber) ~]$  cat hostname.err.3739465
 ~~~
 {: .bash}
 
 
 ~~~
-slurmstepd: error: *** JOB 3739465 ON scs0018 CANCELLED AT 2017-12-06T16:45:38 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 3739465 ON node003 CANCELLED AT 2017-12-06T16:45:38 DUE TO TIME LIMIT ***
 ~~~
 {: .output}
 
 ~~~
-[s.jane.doe@sl1 ~]$ cat hostname.out.3739465
+[abc1@login01(aber) ~]$ cat hostname.out.3739465
 ~~~
 {: .bash}
 
@@ -399,7 +375,7 @@ slurmstepd: error: *** JOB 3739465 ON scs0018 CANCELLED AT 2017-12-06T16:45:38 D
 Now lets override the time limit by giving the parameter `--time 0-0:2` to sbatch, this will set the time limit to two minutes and the job should complete.
 
 ~~~
-[s.jane.doe@sl1 ~]$ sbatch --time 0-0:2 batchjob.sh
+[abc1@login01(aber) ~]$ sbatch --time 0-0:2 batchjob.sh
 ~~~
 {: .bash}
 
@@ -411,7 +387,7 @@ Now lets override the time limit by giving the parameter `--time 0-0:2` to sbatc
 After approximately 70 seconds the job will disappear from the squeue list and this we should have nothing in the `.err` file and a hostname in the `.out` file.
 
 ~~~
-[s.jane.doe@sl1 ~]$ cat hostname.err.3739466
+[abc1@login01(aber) ~]$ cat hostname.err.3739466
 ~~~
 {: .bash}
 
@@ -421,12 +397,12 @@ After approximately 70 seconds the job will disappear from the squeue list and t
 
 
 ~~~
-[s.jane.doe@sl1 ~]$ cat hostname.out.3739466
+[abc1@login01(aber) ~]$ cat hostname.out.3739466
 ~~~
 {: .bash}
 
 ~~~
-scs0018
+node003
 ~~~
 {: .output}
 
@@ -436,7 +412,7 @@ scs0018
 The `scancel` command can be used to cancel a job after its submitted. Lets go ahead and resubmit the job we just used.
 
 ~~~
-[s.jane.doe@sl1 ~]$  sbatch batchjob.sh
+[abc1@login01(aber) ~]$  sbatch batchjob.sh
 ~~~
 {: .bash}
 
@@ -450,7 +426,7 @@ Now (within 60 seconds) lets cancel the job.
 
 
 ~~~
-[s.jane.doe@sl1 ~]$  scancel 3739467
+[abc1@login01(aber) ~]$  scancel 3739467
 ~~~
 {: .bash}
 
@@ -462,7 +438,7 @@ This will cancel the job, `squeue` will now show no record of it and there won't
 The `sacct` command lists all the jobs you have run. By default this shows the Job ID, the Job Name, partition, Account, number of CPUs used, the state of the job and how long it ran for.
 
 ~~~
-[s.jane.doe@sl1 ~]$  sacct
+[abc1@login01(aber) ~]$  sacct
 ~~~
 {: .bash}
 
@@ -470,19 +446,17 @@ The `sacct` command lists all the jobs you have run. By default this shows the J
 ~~~
        JobID    JobName  Partition    Account  AllocCPUS      State ExitCode
 ------------ ---------- ---------- ---------- ---------- ---------- --------
-21713              bash    compute    scw1000          1  COMPLETED      0:0
-21713.extern     extern               scw1000          1  COMPLETED      0:0
-21713.0            bash               scw1000          1  COMPLETED      0:0
-21714              bash    compute    scw1000          1  COMPLETED      0:0
-21714.extern     extern               scw1000          1  COMPLETED      0:0
-21714.0            bash               scw1000          1  COMPLETED      0:0
-21716          hostname    compute    scw1000          1  COMPLETED      0:0
-21716.batch       batch               scw1000          1  COMPLETED      0:0
-21716.extern     extern               scw1000          1  COMPLETED      0:0
+21713              bash    compute                     1  COMPLETED      0:0
+21713.extern     extern                                1  COMPLETED      0:0
+21713.0            bash                                1  COMPLETED      0:0
+21714              bash    compute                     1  COMPLETED      0:0
+21714.extern     extern                                1  COMPLETED      0:0
+21714.0            bash                                1  COMPLETED      0:0
+21716          hostname    compute                     1  COMPLETED      0:0
+21716.batch       batch                                1  COMPLETED      0:0
+21716.extern     extern                                1  COMPLETED      0:0
 ~~~
 {: .output}
-
-In the output above the account is the project you are associated with. `scw1000` is the RSE project. You'll probably see a different project account here.
 
 
 > ## Using the `sbatch` command.
@@ -529,15 +503,12 @@ This will allow multiple copies of the command to run. In the example below two 
 #SBATCH --ntasks=2
 # run the tasks across two nodes; i.e. one per node
 #SBATCH --nodes=2
-# specify our current project
-# change this for your own work
-#SBATCH --account=scwXXXX
 # specify the reservation we have for the training workshop
 # remove this for your own work
 # replace XX with the code provided by your instructor
-#SBATCH --reservation=scwXXXX_YY
-# Specify the development partition, this will give out job a maximum of 30 minutes to run
-#SBATCH --partition=development
+#SBATCH --reservation=XXXX
+# Specify the intel partition
+#SBATCH --partition=intel
 ###
 
 srun /bin/hostname
@@ -547,7 +518,7 @@ srun /bin/hostname
 Save this as `batchjob_parallel.sh` and run it with `sbatch`
 
 ~~~
-[s.jane.doe@sl1 ~]$ sbatch batchjob_parallel.sh
+[abc1@login01(aber) ~]$ sbatch batchjob_parallel.sh
 ~~~
 {: .bash}
 
@@ -559,25 +530,25 @@ The output will now go into `hostname.out.jobnumber` and should contain two diff
 Job Arrays are another method for running multiple copies of the same job. The `--array` parameter to sbatch allows us to make use of this feature.
 
 ~~~
-[s.jane.doe@sl1 ~]$ sbatch --array=0-2 batchjob.sh
+[abc1@login01(aber) ~]$ sbatch --array=0-2 batchjob.sh
 ~~~
 {: .bash}
 
 The above command will submit **three** copies of the batchjob.sh command.
 
 ~~~
-[s.jane.doe@sl1 ~]$ squeue --user=s.jane.doe
+[abc1@login01(aber) ~]$ squeue --user=abc1
              JOBID PARTITION     NAME     USER   ST       TIME  NODES NODELIST(REASON)
-         3739590_0   compute hostname s.jane.doe  R       0:01      1 scs0018
-         3739590_1   compute hostname s.jane.doe  R       0:01      1 scs0018
-         3739590_2   compute hostname s.jane.doe  R       0:01      1 scs0096
+         3739590_0   compute hostname abc1  R       0:01      1 node003
+         3739590_1   compute hostname abc1  R       0:01      1 node003
+         3739590_2   compute hostname abc1  R       0:01      1 node004
 ~~~
 {: .bash}
 
 Running `squeue` as this is happening will show three distinct jobs, each with an _ followed by a number on the end of their job ID. When the jobs are complete there will be three output and three err files all with the job ID and the job array number.
 
 ~~~
-[s.jane.doe@sl1 ~]$ ls -rt | tail -6
+[abc1@login01(aber) ~]$ ls -rt | tail -6
 hostname.out.3739592
 hostname.out.3739591
 hostname.out.3739590
@@ -612,15 +583,14 @@ parameters are being used" ---[Keith Bradnam, acgt.me](http://www.acgt.me/blog/2
 ### Time
 This is determined by test runs that you do on your code during an interactive session.
 Or, if you submit a batch job, over-ask first, check the amount of time actually needed,
-then reduce time on later runs. **The Supercomputing Wales hubs have a limit of three days maximum to run a job**
+then reduce time on later runs. 
 
 **Please!** Due to scheduler overhead, bundle commands for minimum of 10 minutes / job
 
 ### Memory:
 We recommend that you check the software docs for memory
 requirements. But since these are not stated, we can take another
-approach. On the Supercomputing Wales hubs, each job is allowed, on
-average, 9 GB RAM/core allocated. So, try 3 GB and do a trial run via
+approach. Try a fairly low memory limit such as 3 GB and do a trial run via
 `srun` or `sbatch`. If your job was killed, look at your log files or
 `sacct`. If it shows a memory error, you went over. Ask for more and
 try again.
@@ -646,43 +616,38 @@ For most software, this choice is simple: 1. There are *very* few software packa
 
 Partitions, or queues, are a grouping of computers to run a certain
 profile of jobs. This could be maximum run time, number of cores used,
-maximum amount of RAM, etc. On the Supercomputing Wales hubs each
-unique configuration of systems has its own partition. Earlier on we
+maximum amount of RAM, etc. Earlier on we
 used the `sinfo` command to list the state of the cluster, one of the
 parameters this showed was the name of the partitions.
 
-Here is the output of `sinfo` on Sunbird in Swansea.
+Here is the output of `sinfo` on Bert.
 
 ~~~
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-compute*     up 3-00:00:00      1   fail scs0042
-compute*     up 3-00:00:00      1 drain* scs0004
-compute*     up 3-00:00:00      2    mix scs[0018,0065]
-compute*     up 3-00:00:00     84  alloc scs[0001-0003,0005-0017,0020-0035,0043-0046,0049-0064,0066-0072,0097-0114,0116-0122]
-compute*     up 3-00:00:00     34   idle scs[0019,0036-0041,0047-0048,0073-0096,0115]
-gpu          up 2-00:00:00      4   idle scs[2001-2004]
+gpu          up   infinite      1   idle gpu01
+intel        up   infinite      1    mix node003
+intel        up   infinite      1   idle node004
+amd          up   infinite      4    mix node[008-011]
+highmem      up   infinite      1    mix node012
+fat          up   infinite      1    mix node002
 ~~~
 {: .output}
 
-The partition name is listed in the first column. The `*` next to the
-`compute` partition denotes that it is the default. We can see that in
-total it contains 122 nodes. Each of these has 384GB of RAM and 40
-Intel Xeon Scalable Silver cores. Meanwhile the `gpu` queue contains
-4 nodes, which have the same number of CPU cores and amount of RAM
-as those in the `compute` queue, but additionally have two NVIDIA
-Tesla V100 GPUs each.
+The partition name is listed in the first column. The intel, amd, highmem and fat nodes are
+all some form of standard compute node with different amounts of RAM and different types of CPU.
+Meanwhile the `gpu` queue contains a node with an NVIDIA A100 GPU.
 
 We can specify which partition a job runs in with the `-p` or `--partition` arguments to `sbatch`. So for example the following command will run our batch job on the compute partition.
 
 ~~~
-sbatch --partition compute batchjob.sh
+sbatch --partition=intel batchjob.sh
 ~~~
 {: .bash}
 
 We could also add the following line to the batch submission script.
 
 ~~~
-#SBATCH --partition compute
+#SBATCH --partition=intel
 ~~~
 {:  .bash}
 
