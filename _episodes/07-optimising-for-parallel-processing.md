@@ -18,7 +18,7 @@ keypoints:
 
 ## Running a job on multiple cores
 
-By default most programs will only run one job per node, but all Supercomputing Wales nodes have multiple CPU cores and are capable of running multiple processes at once without (much) loss of performance.
+By default most programs will only run one job per node, but all HPC nodes have multiple CPU cores and are capable of running multiple processes at once without (much) loss of performance.
 
 A crude way to achieve this is to have our job submission script just run multiple processes and background each one with the `&` operator.
 
@@ -36,14 +36,12 @@ A crude way to achieve this is to have our job submission script just run multip
 # ensure that tasks run on the same node
 #SBATCH --nodes=1
 # specify our current project
-# replace XXXX with the code provided by your instructor
-#SBATCH --account=scwXXXX
 # specify the reservation we have for the training workshop
 # remove this for your own work
-# replace XXXX and YY with the code provided by your instructor
-#SBATCH --reservation=scwXXXX_YY
+# replace XXXX
+#SBATCH --reservation=XXXX
 # specify the partition, change to dev on Hawk
-#SBATCH --partition=development
+#SBATCH --partition=intel
 ###
 
 command1 &
@@ -222,7 +220,7 @@ parallel bash goostats {1} {1}.stats :::: files_to_process.txt
 ### Running Parallel under Slurm
 
 To process using Parallel on a single node, we can use a job submission script very similar to the ones we have been using so far.
-Since each compute node on Sunbird and Hawk has 40 cores, Parallel will automatically run 40 different parameters at once. We
+Since each compute node has multiple cores, Parallel will automatically run many different parameters at once. We
 need to be careful to request the whole node so that we don't use cores that aren't allocated to us.
 
 First lets create a job submission script and call it `parallel_1node.sh`.
@@ -234,15 +232,11 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 #SBATCH --exclusive                    # request that we get exclusive use of this node
 #SBATCH --output output.%J                   # Job output
 #SBATCH --time 00:01:00                    # Max wall time for entire job
-# specify our current project
-# replace XXXX with the code provided by your instructor
-#SBATCH --account=scwXXXX
 # specify the reservation we have for the training workshop
 # remove this for your own work
-# replace XXXX and YY with the code provided by your instructor
-#SBATCH --reservation=scwXXXX_YY
-# specify the partition, change to dev on Hawk
-#SBATCH --partition=development
+#SBATCH --reservation=XXXX
+# specify the partition
+#SBATCH --partition=intel
 ###
 
 # Ensure that parallel is available to us
@@ -277,15 +271,12 @@ to run enough programs to fill all of the nodes that we have allocated. Let's cr
 #SBATCH --output output.%J
 # Time limit for this job
 #SBATCH --time 00:01:00
-# specify our current project
-# replace XXXX with the code provided by your instructor
-#SBATCH --account=scwXXXX
 # specify the reservation we have for the training workshop
 # remove this for your own work
-# replace XXXX and YY with the code provided by your instructor
-#SBATCH --reservation=scwXXXX_YY
+# replace XXXX with the code provided by your instructor
+#SBATCH --reservation=XXXX
 # specify the partition, change to dev on Hawk
-#SBATCH --partition=development
+#SBATCH --partition=intel
 ###
 
 # Ensure that parallel is available to us
@@ -319,23 +310,23 @@ sbatch parallel_multinode.sh
 This will take a minute or so to run. If we watch the output of `sacct` we should see 15 subjobs being created.
 
 ~~~
-35590.batch       batch               scw1000          4  COMPLETED      0:0
-35590.extern     extern               scw1000          4  COMPLETED      0:0
-35590.0            bash               scw1000          1  COMPLETED      0:0
-35590.1            bash               scw1000          1  COMPLETED      0:0
-35590.2            bash               scw1000          1  COMPLETED      0:0
-35590.3            bash               scw1000          1  COMPLETED      0:0
-35590.4            bash               scw1000          1  COMPLETED      0:0
-35590.5            bash               scw1000          1  COMPLETED      0:0
-35590.6            bash               scw1000          1  COMPLETED      0:0
-35590.7            bash               scw1000          1  COMPLETED      0:0
-35590.8            bash               scw1000          1  COMPLETED      0:0
-35590.9            bash               scw1000          1  COMPLETED      0:0
-35590.10           bash               scw1000          1  COMPLETED      0:0
-35590.11           bash               scw1000          1  COMPLETED      0:0
-35590.12           bash               scw1000          1  COMPLETED      0:0
-35590.13           bash               scw1000          1  COMPLETED      0:0
-35590.14           bash               scw1000          1  COMPLETED      0:0
+35590.batch       batch                                4  COMPLETED      0:0
+35590.extern     extern                                4  COMPLETED      0:0
+35590.0            bash                                1  COMPLETED      0:0
+35590.1            bash                                1  COMPLETED      0:0
+35590.2            bash                                1  COMPLETED      0:0
+35590.3            bash                                1  COMPLETED      0:0
+35590.4            bash                                1  COMPLETED      0:0
+35590.5            bash                                1  COMPLETED      0:0
+35590.6            bash                                1  COMPLETED      0:0
+35590.7            bash                                1  COMPLETED      0:0
+35590.8            bash                                1  COMPLETED      0:0
+35590.9            bash                                1  COMPLETED      0:0
+35590.10           bash                                1  COMPLETED      0:0
+35590.11           bash                                1  COMPLETED      0:0
+35590.12           bash                                1  COMPLETED      0:0
+35590.13           bash                                1  COMPLETED      0:0
+35590.14           bash                                1  COMPLETED      0:0
 ~~~
 {: .output}
 
@@ -391,9 +382,8 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 > > #SBATCH --ntasks 80
 > > #SBATCH --output output.%J
 > > #SBATCH --time 00:01:00
-> > #SBATCH --account=scwXXXX
-> > #SBATCH --reservation=scwXXXX_YY
-> > #SBATCH --partition=development
+> > #SBATCH --reservation=XXXX
+> > #SBATCH --partition=intel
 > > ###
 > > module load parallel
 > > srun="srun --nodes 1 --ntasks 1"
@@ -456,13 +446,12 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 >> #SBATCH --ntasks 80
 >> #SBATCH --output output.%J
 >> #SBATCH --time 00:01:00
->> #SBATCH --account=scw1389
->> #SBATCH --reservation=scw1389_XX
+>> #SBATCH --reservation=XXXX
 >> ###
 >> 
 >> # Ensure that parallel is available to us
 >> module load parallel
->> module load R/3.6.0
+>> module load R/3.4.0
 >> 
 >> # Define srun arguments:
 >> srun="srun --nodes 1 --ntasks 1"
@@ -490,13 +479,12 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 >> #SBATCH --ntasks 80
 >> #SBATCH --output output.%J
 >> #SBATCH --time 00:01:00
->> #SBATCH --account=scw1389
->> #SBATCH --reservation=scw1389_XX
+>> #SBATCH --reservation=XXXX
 >> ###
 >> 
 >> # Ensure that parallel is available to us
 >> module load parallel
->> module load R/3.6.0
+>> module load R/3.4.0
 >> 
 >> # Define srun arguments:
 >> srun="srun --nodes 1 --ntasks 1"
@@ -601,7 +589,7 @@ minutes to process, then the 1,000 cores would all be reserved to you
 might be a few hours, after which the job would finish in around five
 minutes.
 
-If instead you requested 40 cores (i.e. one node), then Slurm would
+If instead you requested 32 cores (i.e. one node), then Slurm would
 find it a lot easier to schedule your job---you'd be waiting on a
 single node (less than 1% of the cluster) to become available, and
 would likely start within a few minutes to an hour, unless the cluster

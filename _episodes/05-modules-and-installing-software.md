@@ -22,10 +22,10 @@ instead, it is loaded into your environment incrementally using a module system.
 The `module` command controls this.
 You can get a list of available software with the `module avail` command. This should return a long list of available software.
 
-One common piece of software that isn't installed on the Supercomputing Wales hubs (without a module) is R. If we attempt to run `R` from the command line it will respond with an error:
+One common piece of software that isn't installed on Bert (without a module) is R. If we attempt to run `R` from the command line it will respond with an error:
 
 ~~~
-[s.jane.doe@sl1 ~]$ R
+[abc1@login01(aber) ~]$ R
 ~~~
 {: .bash}
 
@@ -45,11 +45,11 @@ an entry `R/3.6.2` in the `/apps/modules/langauges` section
 near the top. 
 
 ~~~
-[s.jane.doe@sl1 ~]$ module load R/3.6.2
-[s.jane.doe@sl1 ~]$ R
+[abc1@login01(aber) ~]$ module load R/3.4.0
+[abc1@login01(aber) ~]$ R
 WARNING: ignoring environment value of R_HOME
 
-R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
+R version 3.4.0 (2017-04-21) -- "You Stupid Darkness"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -69,15 +69,15 @@ Type 'q()' to quit R.
 
 > q()
 Save workspace image? [y/n/c]: n
-[s.jane.doe@sl1 ~]$
+[abc1@login01(aber) ~]$
 ~~~
 {: .bash}
 
-> ## Legacy HPC Wales and Raven Modules
-> All of the old modules which were available on HPC Wales and the old Cardiff Raven system
-> are available by running either `module load hpcw` or `module load raven`. (Raven modules are only available on Hawk.)
-> Please note that much of this software is outdated and may by suboptimal as it is not compiled
-> to take advantage of the newer CPU architectures on Supercomputing Wales.
+> ## Legacy modules interacting with modern system packages
+> All of the modules from the old operating system on Bert have been copied over.
+> Many of them bring in old versions of system libraries that break other system commands such as git, scp, ssh and wget.
+> If you get "symbol error" or "undefined symbol" errors then try unloading some of your modules, especially the gcc/4.9.4 and gcc/5.5.0 modules.
+> We will be slowly replacing the old modules with newer ones that won't have these problems. 
 {: .callout}
 
 
@@ -96,13 +96,13 @@ that can create self-contained Python environments, and install various
 versions of Python and other related dependencies into them.
 Anaconda is a popular distribution of Python for scientific computing
 that is based on Conda, including a large number of frequently-used
-packages. Anaconda is available on Supercomputing Wales, and can then
+packages. Anaconda is available on Bert, and can then
 be used to build new Conda environments.
 
 To load Anaconda, two commands are necessary:
 
 ~~~
-> module load anaconda/2021.05
+> module load anaconda3/2020.02
 > source activate
 ~~~
 {: .language-bash}
@@ -184,7 +184,7 @@ module is loaded and your Conda environment is activated, then `pip`
 will automatically install into your Conda environment and not try to
 install at the system level.
 
-For more detail on using Python with Supercomputing Wales, see the
+For more detail on using Python, see the Supercomputing Wales 
 training on [High Performance
 Python](https://edbennett.github.io/high-performance-python).
 
@@ -205,7 +205,7 @@ installs in your home or project shared directory for bleeding-edge
 releases, software you are testing, or software used only by your
 project. For programs that are commonly used by your domain, field,
 or department, please submit a
-[software install request](email:support@supercomputingwales.ac.uk).
+[software install request](email:ibers-cs@aber.ac.uk).
 Note that due to demand and the complex nature of software installs,
 it may take a while for us to complete these requests.
 
@@ -246,14 +246,12 @@ Commercial software will require the appropriate licenses.
 >    # number of nodes needed
 >    #SBATCH --nodes=1
 >    # specify our current project
->    # change this for your own work
->    #SBATCH --account=scwXXXX
 >    # specify the reservation we have for the training workshop
 >    # remove this for your own work
 >    # replace XX with the code provided by your instructor
->    #SBATCH --reservation=scwXXXX_YY
+>    #SBATCH --reservation=XXXX
 >    ###
->    module load anaconda/2019.03
+>    module load anaconda3/2020.02
 >    source activate scw_test
 >    python3 plot.py
 >    ~~~

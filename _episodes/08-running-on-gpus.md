@@ -8,7 +8,7 @@ questions:
 objectives:
  - "Be able to submit jobs that can run on a GPU"
 keypoints:
- - "Use `--partition=gpu` or `--partition=accel_ai` to submit to a partition with GPUs"
+ - "Use `--partition=gpu` to submit to a partition with GPUs"
  - "Use `--gres=gpu:1` (or similar) to specify the number of GPUs you need."
 ---
 
@@ -22,31 +22,10 @@ more speed than the CPU that drives them.
 
 ## What's available
 
-Supercomputing Wales provides access to NVIDIA V100 GPUs on both
-the SUNBIRD and HAWK clusters. Additionally, latest-generation NVIDIA
-A100 GPUs are available on SUNBIRD as part of the
-[AccelerateAI][accelerateai] facility. Since these nodes are separate
-from the nodes used so far for CPU computation, we need to specify a
-different partition for Slurm to allocate the correct nodes.
+Bert provides access to an NVIDIA A100 GPU. Since this node is separate
+from the nodes used so far for CPU computation, we need to specify the gpu
+partition for Slurm to allocate the correct nodes.
 
-| System  | Partition      | GPUs available per node                           | Number of Nodes | Access                                                  |
-| SUNBIRD | `gpu`          | 2 x V100 16GB                                     | 4               | Swansea and Aberystwyth users                           |
-| SUNBIRD | `s_gpu_eng`    | 4 x V100 32GB                                     | 1               | Swansea Engineering users\*\*                               |
-| SUNBIRD | `accel_ai` *   | 8 x A100 40GB                                     | 5               | [AccelerateAI][accelerateai] users\*\*                      |
-| SUNBIRD | `accel_ai_mig` | 24 x A100 10GB, 8 x A100 5GB (multi-instance GPU) | 1               | [AccelerateAI][accelerateai] users\*\*, for interactive use |
-| HAWK    | `gpu`          | 2 x P100 16GB                                     | 13              | Cardiff and Bangor users                                |
-| HAWK    | `gpu_v100`     | 2 x V100 16GB                                     | 15              | Cardiff and Bangor users                                |
-
-\* In addition to the `accel_ai` partition, there is also an 
-`accel_ai_dev` partition that gives access to the same nodes, but
-accepts a smaller number of shorter jobs in exchange for higher
-priority access. This is designed for running short tests before
-starting full runs on the `accel_ai` partition.
-
-\*\* For the AccelerateAI and `s_gpu_eng` partitions, please include
-a note in your project request that you will need access to these
-resources, and how you will use them. The technical team will then
-ensure that you are given access.
 
 ## `sbatch` options for GPUs
 
@@ -107,20 +86,15 @@ called `submit_tf.sh`:
 #SBATCH --error=tensorflow_test.err.%J
 # maximum job time in D-HH:MM
 #SBATCH --time=0-00:05
-# specify our current project
-# change this for your own work
-#SBATCH --account=scwXXXX
 # Specify the GPU partition
-# (If the GPU partition is busy, the instructor may
-# recommend a different one)
 #SBATCH --partition=gpu
 # Specify how many GPUs we would like to use
 #SBATCH --gres=gpu:1
 ###
 
 # Load Anaconda and activate our environment with Tensorflow installed
-module load anaconda/2021.05
-source activate scw_test
+module load anaconda3/2020.02
+source activate workshop
 
 python tf_simple.py
 ~~~
@@ -155,7 +129,7 @@ It shows that the GPU `/device:GPU:0` is available to this job.
 
 > ## Train a neural network
 >
-> Copy the file `/home/scw1389/tensorflow/test_train.py` to your home
+> Copy the file `/ibers/repository/public/courses/tensorflow/test_train.py` to your home
 > directory. This program is borrowed from the Tensorflow tutorial,
 > and will train a small neural network to recognise handwritten digits,
 > a common example problem in machine learning.
