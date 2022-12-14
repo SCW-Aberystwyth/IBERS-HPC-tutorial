@@ -123,12 +123,12 @@ With this done, we can now use Conda to create
 a new environment to install the packages that we want for our own work:
 
 ~~~
-$ conda create -n scw_test python=3.9 mamba
+$ conda create -n test python=3.9 mamba
 ~~~
 {: .bash}
 
 This tells the `conda` command to `create` a new environment, to
-give it the name `scw_test`, and to install Python 3.9 and Mamba into
+give it the name `test`, and to install Python 3.9 and Mamba into
 it. Mamba is an alternative version of Conda, that can solve the
 complicated problem of getting compatible versions of all of your
 requested packages simultaneously more quickly than Conda can.
@@ -141,30 +141,27 @@ Once your environment is created, you can activate it so you can
 use it to work in with the command
 
 ~~~
-$ conda activate scw_test
+$ conda activate test
 ~~~
 {: .bash}
 
 The prefix at the start of your prompt will now change from `base`
 to `scw_test`, to indicate the environment that you have active.
 Similarly, `which python` now returns
-`~/.conda/envs/scw_test/bin/python`, indicating that this is now
+`~/.conda/envs/test/bin/python`, indicating that this is now
 where Python will run from if you run `python`.
 
 So far we have created a relatively bare environemnt, but we can
 install packages into the new environment just as we can on our own
-machines. Let's now install Matplotlib and a recent Tensorflow
-version into this environment:
+machines. Let's now install Matplotlib into this environment:
 
 ~~~
-$ mamba install matplotlib tensorflow-gpu\>=2.5
+$ mamba install matplotlib
 ~~~
 {: .bash}
 
 Mamba automatically works out which extra packages need to be present
-for Matplotlib and Tensorflow to work, and then prompts to install them.
-In the latter case, since we requested the GPU version of Tensorflow,
-it automatically installs all of the requisite CUDA libraries as well.
+for Matplotlib to work, and then prompts to install them.
 
 You could alternatively have specified the packages directly to the
 `conda create` command, and it would have been installed when the
@@ -215,8 +212,8 @@ Commercial software will require the appropriate licenses.
 # Exercises
 
 > ## Running a Python script
->
-> 1. Create a new file using `nano` and call it `plot.py`. Give it the
+> 1. Setup a conda environment called test and install python 3.9 and matplotlib into it.
+> 2. Create a new file using `nano` and call it `plot.py`. Give it the
 >    following contents:
 >    ~~~
 >    import matplotlib as mpl
@@ -226,7 +223,7 @@ Commercial software will require the appropriate licenses.
 >    plt.savefig('temp.png')
 >    ~~~
 >    {: .python}
-> 2. Create a new job submission script called `plot.sh` containing
+> 3. Create a new job submission script called `plot.sh` containing
 >    the following:
 >    ~~~
 >    #!/bin/bash --login
@@ -252,14 +249,14 @@ Commercial software will require the appropriate licenses.
 >    #SBATCH --reservation=XXXX
 >    ###
 >    module load anaconda3/2020.02
->    source activate scw_test
+>    source activate test
 >    python3 plot.py
 >    ~~~
 >    {: .bash}
-> 3. Run the job with `sbatch plot.sh`. Did the job complete
+> 4. Run the job with `sbatch plot.sh`. Did the job complete
 >    successfully? Are there any errors in the error file?
-> 4. Fix the cause of the errors by adjusting (or removing) the appropriate parameter.
-> 5. Copy back the resulting file, `temp.png` using SCP or SFTP and
+> 5. Fix the cause of the errors by adjusting (or removing) the appropriate parameter.
+> 6. Copy back the resulting file, `temp.png` using SCP or SFTP and
 >    view it on your computer.
 > 6. Add the following lines to the Python script (between the
 >    `plt.plot` line and the `plt.savefig` line) to make it embed the job
