@@ -326,7 +326,7 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 # replace XXXX and YY with the code provided by your instructor
 #SBATCH --reservation=XXXX
 # Specify the intel partition
-#SBATCH --partition=development
+#SBATCH --partition=intel
 ###
 
 /bin/sleep 70
